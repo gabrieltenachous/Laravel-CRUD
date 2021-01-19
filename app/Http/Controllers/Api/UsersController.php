@@ -17,12 +17,17 @@ class UsersController extends Controller
     public function get($id)
     {
         $user = User::find($id);
-        if (is_null($user)) {
+        if (is_null($user)) {   
             return response()->json(['message' => 'Usuario não encontrado'], 404);
         }
         return response()->json($user::find($id), 200);
     }
 
+    public function create(){
+        return view('users.create');
+    }
+
+    
     public function post(Request $request)
     {
         $user = new User();
