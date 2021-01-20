@@ -20,7 +20,7 @@
         <label for="">Email:</label>
         <input type="text" name="email" id="email"><br>
         <label for="">Senha:</label>
-        <input type="text" name="password" id="password"><br>
+        <input type="password" name="password" id="password"><br>
         <input type="button" value="Salvar" onclick="cadastraUsuario()"/>
         <a href="/users/list/">Voltar</a>
     </form>
@@ -46,7 +46,7 @@
                     console.log(data)
                 },
                 error: function() {
-                    alert("Erro ao realizr  requisicao")
+                    alert("Erro ao realizar  requisicao")
                 }
             });
         }

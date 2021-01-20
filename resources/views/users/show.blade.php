@@ -17,7 +17,7 @@
     <label for="">Email:</label>
     <input type="text" name="email" value="{{$user -> email}}"><br>
     <label for="">Password</label>
-    <input type="text" name="password" value="{{$user -> password}}"><br> 
+    <input type="password" name="password" value="{{$user -> password}}"><br> 
     <a href="/users/list/">Voltar</a>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

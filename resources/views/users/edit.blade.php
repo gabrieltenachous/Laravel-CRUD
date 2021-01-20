@@ -12,13 +12,14 @@
   <body>
       
     <form action="{{ route('alterar_user',['id' => $user->id]) }}" method="POST">
+
         @csrf
         <label for="">Nome:</label> 
         <input type="text" name="name" value="{{$user->name}}"><br>
         <label for="">Email:</label>
         <input type="text" name="email" value="{{$user->email}}"><br>
         <label for="">Senha:</label> 
-        <input type="text" name="password"><br>
+        <input name="password" type="password" value="{{$user->password}}"><br>
         <input type="submit">Salvar</input>
 
     </form>

@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Admin\ProdutoController;
 use Illuminate\Support\Facades\Route;  
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,10 +18,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-//Route::get('users/show/{id}', [UsersController::class, 'list']);
-//Route::put('users/viewEdit', [UsersController::class, 'edit']);
-
+ 
+//---------------------------- USUARIO  -----------------------------
 //criar
 Route::post('users/create', [UsersController::class, 'store'])->name('registrar_produto');
 Route::get('users/create', [UsersController::class, 'create']);
@@ -34,5 +32,7 @@ Route::post('/users/editar/{id}',[UsersController::class, 'update'])->name('alte
 Route::get('/users/excluir/{id}',[UsersController::class, 'deletar']);
 Route::post('/users/excluir/{id}',[UsersController::class, 'destroy'])->name('excluir_user');
 //lista
-Route::get('/users/list',[UsersController::class,'list']);
-//Route::post('/users/list{id}',[UsersController::class,'list']->name('lista_user'));
+Route::get('/users/list',[UsersController::class,'list']); 
+
+//------------------------- PRODUTOS -------------------------------
+Route::get('produto/list',[ProdutoController::class,'list']);

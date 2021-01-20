@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class UsersController extends Controller
 {
@@ -21,38 +22,42 @@ class UsersController extends Controller
         ]);
         return "Criado com sucesso  <a href='./list'>Voltar para Lista</a>";
     }
- 
+
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
+        try {
 
-        $user->update(
-            [
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => $request->password,
-            ]
-        );
+            $user->update(
+                [
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'password' => $request->password,
+                ]
+            );
+        } catch (QueryException $th) {
+            return "Erro inesperado";
+        }
         return "Edição por ID com sucesso  <a href='/users/list'>Voltar para Lista</a>";
     }
     public function list()
     {
         $user = User::all();
-        return view('users.lista',['users'=>$user]);
+        return view('users.lista', ['users' => $user]);
     }
 
-    public function edit($id)
+    public function edit($id, Request $request)
     {
         $user = User::findOrFail($id);
-        return view('users.edit', ['user' => $user]); 
-
+        return view('users.edit', ['user' => $user]);
     }
-    public function deletar($id){
+    public function deletar($id)
+    {
         $user = User::findOrFail($id);
-        return View('users.deletar',['user' =>$user]);
-
-    } 
-    public function destroy($id){
+        return View('users.deletar', ['user' => $user]);
+    }
+    public function destroy($id)
+    {
         $user = User::findOrFail($id);
         $user->delete();
         return "Ususario Excluido <a href='/users/list'>Voltar para Lista</a>";
@@ -62,5 +67,4 @@ class UsersController extends Controller
         $user = User::findOrFail($id);
         return view('users.show', ['user' => $user]);
     }
- 
 }
