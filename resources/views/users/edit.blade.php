@@ -15,15 +15,38 @@
 
         @csrf
         <label for="">Nome:</label> 
-        <input type="text" name="name" value="{{$user->name}}"><br>
+        <input type="text" name="name" id="name" value="{{$user->name}}"><br>
         <label for="">Email:</label>
-        <input type="text" name="email" value="{{$user->email}}"><br>
+        <input type="text" name="email" id="email" value="{{$user->email}}"><br>
         <label for="">Senha:</label> 
         <input name="password" type="password" value="{{$user->password}}"><br>
-        <input type="submit">Salvar</input>
-
+        <input type="submit" onclick="editarId()">Salvar</input>
+        <input type="hidden" id="hidden_id" value="{{$user->id}}">
     </form>
 
-    <a href="/users/list/">Voltar</a>
+    <a href="/users/list/">Voltar</a> 
+
+
     </body>
+
+    <script>
+     
+    function editarId() {
+        var valorUrl = $('#hidden_id').val(); 
+        var email = $('#email').val(); 
+        var name = $('#name').val();
+        $.ajax({
+
+            type: "PUT",
+            url: 'http://127.0.0.1:8000/api/users/' +valorUrl,
+            dataType: 'json',
+            success: function(data) {
+                alert("Edição Correta");
+                location.reload();
+            },
+            error: function() {
+                alert("Erro ao realizar  requisicao");
+            }
+        });
+    }</script>
 </html>

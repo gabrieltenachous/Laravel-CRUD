@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <!--<div class="container">
+    <div class="container">
         <div class="row">
 
             <a href="/users/create">
@@ -25,57 +25,94 @@
                         <th scope="col">Id:</th>
                         <th scope="col">Name:</th>
                         <th scope="col">Email:</th>
-                        <th scope="col">Funcção</th>
+                        <th></th>
+                        <th scope="col">Função</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach($users as $user)
-                    <tr>
+                <tbody id="idTbody">
 
-                        <th>{{$user -> id}}</th>
-                        <td>{{$user -> name}}<br></td>
-                        <td>{{$user -> email}}<br></td>
-                        <td>
-                            <a href="/users/ver/{{$user -> id}}">
-                                <input name="" id="" class="btn btn-primary" type="button" value="Visualizar">
-                            </a>
-                            <a href="/users/editar/{{$user -> id}}">
-                                <input name="" id="" class="btn btn-warning" type="button" value="Editar"></a>
-                            <a href="/users/excluir/{{$user -> id}}">
-                                <input name="" id="" class="btn btn-danger" type="button" value="Excluir"></a>
-                        </td>
-                    </tr>
-                    @endforeach
                 </tbody>
 
 
             </table>
         </div>
-    </div> --> 
-    <button onclick="cadastraUsuario()">SDSADSA</button>
-    
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Deseja Excluir esse usuario?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="idModal">Voce quer exluir esse Usuario?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+
+                        <button type="button" class="btn btn-primary" onclick="excluirId()">Excluir</button>
+
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" id="url_id">
+        </div>
+    </div>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
+
+
 <script>
-        function cadastraUsuario() 
-        { 
-            $.ajax({
-                type: "GET",
-                url: 'http://127.0.0.1:8000/api/users',
-                dataType: 'json', 
-                //headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                success: function(data) {
-                   
-                    console.log(data)
-                    alert("Cadastro por sucesso");
-                },
-                error: function() {
-                    alert("Erro ao realizar  requisicao");
-                }
-            });
+    function hidenId(valorUrl) {
+        $('#url_id').val(valorUrl);
+        console.log($('#url_id').val());
+    }
+
+    function excluirId() {
+        var valorUrl = $('#url_id').val();
+        $.ajax({
+            type: "DELETE",
+            url: 'http://127.0.0.1:8000/api/users/' + valorUrl,
+            dataType: 'json',
+            success: function(data) {
+                alert("Exclusão Correta");
+                location.reload();
+            },
+            error: function() {
+                alert("Erro ao realizar  requisicao");
+            }
+        });
+    }
+
+    $.ajax({
+        type: "GET",
+        url: 'http://127.0.0.1:8000/api/users',
+        dataType: 'json',
+        //headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        success: function(data) {
+            data.map(u => { 
+                modal = $('#url_id').val();
+                table = "<tr>";
+                table += "<td>" + u.id + "</td>";
+                table += "<td>" + u.name + "</td>";
+                table += "<td>" + u.email + "</td>";
+                table += "<td>" + "<input class='btn btn-danger' type='button' data-toggle='modal' data-target='#exampleModal' onclick='hidenId(" + u.id + ")' value='Excluir'/>" + "</td>";
+                table += "<td>" + "<a href='/users/editar/" + u.id + "'>" + "<input class='btn btn-warning' type='button' value='Editar'/>" + " </a>" + "</td> ";
+                table += "<td>" + "<a href='/users/ver/" + u.id + "'>" + "<input class='btn btn-success' type='button' value='Visualizar'/>" + " </a>" + "</td>";
+                table += "</tr>"
+                $('#idTbody').append(table)
+            })
+
+        },
+        error: function() {
+            alert("Erro ao realizar  requisicao");
         }
-    </script>
+    });
+</script>
+
 </html>
