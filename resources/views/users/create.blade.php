@@ -13,7 +13,7 @@
 
 <body>
 
-    <form action="{{route('registrar_produto') }}" method="POST">
+    <form action="" method="POST">
         @csrf
         <label for="">Nome:</label>
         <input type="text" name="name" id="name"><br>
@@ -43,10 +43,12 @@
                 },
                 //headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 success: function(data) {
+                   
                     console.log(data)
+                    alert("Cadastro por sucesso");
                 },
                 error: function() {
-                    alert("Erro ao realizar  requisicao")
+                    alert("Erro ao realizar  requisicao");
                 }
             });
         }
