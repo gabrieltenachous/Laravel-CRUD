@@ -18,15 +18,15 @@
         <div class="row">
             <div class="col-12 form-group">
             
-                <label for="">Nome:</label>
+                <label for="">Produto:</label>
                 <input type="text"class="form-control" name="name" id="name" value="{{$user->name}}"><br>
             </div>
             <div class="col-12  form-group">
-                <label for="">Email:</label>
+                <label for="">Data:</label>
                 <input type="text" class="form-control" name="email" id="email" value="{{$user->email}}"><br>
             </div>
             <div class="col-12  form-group">
-                <label for="">Senha:</label>
+                <label for="">Valor Unitario:</label>
                 <input name="password" class="form-control" type="password" value="{{$user->password}}"><br>
             </div>
             <div class="col-12  form-group">

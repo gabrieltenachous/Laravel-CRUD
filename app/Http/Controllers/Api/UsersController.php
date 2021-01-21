@@ -33,13 +33,7 @@ class UsersController extends Controller
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        // $user = User::create($request->all()); 
-        // if (is_null($user)) {
-        //     return response()->json(['message' => 'User Not Found'], 404);
-        // }
-        // $user->save();
-        // return response($user, 201);   
+        $user->password = Hash::make($request->password); 
         $user->save();
         return $user;
     }

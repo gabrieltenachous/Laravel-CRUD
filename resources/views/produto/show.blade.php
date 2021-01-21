@@ -11,13 +11,15 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
-<body> 
+<body>
+
+    @csrf
     <label for="">Nome:</label>
     <input type="text" name="name" value="{{$user -> name}}"><br>
-    <label for="">Email:</label>
-    <input type="text" name="email" value="{{$user -> email}}"><br>
-    <label for="">Password</label>
-    <input type="password" name="password" value="{{$user -> password}}"><br> 
+    <label for="">Quantidade:</label>
+    <input type="text" name="email" value="{{$user -> amount}}"><br>
+    <label for="">Codigo</label>
+    <input type="password" name="password" value="{{$user -> code}}"><br>
     <a href="/users/list/">Voltar</a>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
