@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Api; 
+namespace App\Http\Controllers\Api;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Input;
+use PhpParser\Node\Stmt\Foreach_;
 
 class InputController extends Controller
 {
@@ -27,11 +29,19 @@ class InputController extends Controller
     {
         $inputs = new Input();
         $inputs->product_id = $request->product_id;
-        $inputs->after_amount  = $request->before_amount;
+ 
+         
+
         $inputs->unitary_value  = $request->unitary_value;
+        $inputs->amount  = $request->amount;
         $inputs->date = $request->date;
-        $inputs->total_value = $request->total_value;
-        $inputs->save();    
+        $inputs->total_value = $request->amount * $request->unitary_value;
+        $inputs->product->amount = $request->amount;
+
+        $inputs->after_amount  = $request->amount;
+        $inputs->before_amount  = $request->amount;
+        $inputs->save();
+        $inputs->product->save();
         return response()->json([
             'message' => 'Product criado com sucesso!',
             'data' => $inputs
@@ -44,9 +54,15 @@ class InputController extends Controller
         if (is_null($inputs)) {
             return response()->json(['message' => 'User Not Found'], 404);
         }
+
+        $inputs->product->amount = $request->amount;
+        $inputs->amount = $request->after_amount; 
+        $inputs->total_value = $request->unitary_value * $request->amount;
         $inputs->update($request->all());
+        $inputs->product->save();
+        $inputs->save();
         return response($inputs, 200);
-    }
+    }   
 
     public function delete(Request $request, $id)
     {

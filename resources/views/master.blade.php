@@ -10,13 +10,13 @@
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
            
             <li class="nav-item">
-                <a class="nav-link" href="#">Produtos</a>
+                <a class="nav-link" href="/produtos/lista">Produtos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Entradas</a>
+                <a class="nav-link" href="/inputs/lista">Entradas</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Usuarios</a>
+                <a class="nav-link" href="/users/list">Usuarios</a>
             </li>
             <!-- <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>

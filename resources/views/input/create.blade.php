@@ -18,7 +18,7 @@
             @csrf
             <div class="form-group">
                 <label for="name">Produto</label>
-                <select name="products" class="form-control" id="products_id">
+                <select  name="products" class="form-control" id="products_id">
                 </select>
             </div>
             <div class="form-group">
@@ -27,8 +27,13 @@
             </div>
             <div class="form-group">
                 <label for="preco">Valor unitário</label>
-                <input type="text" class="form-control" id="unitary-value" placeholder="Valor unitário">
+                <input required type="text" class="form-control" id="unitary-value" placeholder="Valor unitário">
             </div>
+            <div class="form-group">
+                <label for="preco">Quantidade</label>
+                <input requerd type="number" class="form-control" id="amount" placeholder="Quantidade">
+            </div>
+
             <input type="button" class="btn btn-primary" onclick="cadastraEntrada()" value="Cadastrar" />
             <a href="/inputs/lista" class="btn btn-outline-primary">Voltar</a>
         </form>
@@ -53,7 +58,7 @@
             url: 'http://127.0.0.1:8000/api/products',
             dataType: 'json',
             success: function(data) {
-                data.map(u => { 
+                data.map(u => {
                     var table = "<option value='" + u.id + "'>" + u.name + "</option>"
                     $('#products_id').append(table);
                 })
@@ -65,9 +70,15 @@
     }
 
     function cadastraEntrada() {
+        
+        var amount = $('#amount').val()
+        
         var products_id = $("#products_id option:selected").val()
         var unitary_value = $('#unitary-value').maskMoney('unmasked')[0];
         var date = $("#date").val()
+        var amount = $("#amount").val() 
+        var before_amount = $("#amount").val()
+        var after_amount = $("#amount").val()
         $.ajax({
             type: "POST",
             url: 'http://127.0.0.1:8000/api/inputs',
@@ -76,13 +87,15 @@
                 'product_id': products_id,
                 'unitary_value': unitary_value,
                 'date': date,
+                'before_amount': before_amount,
+                'after_amount': after_amount,
+                'amount': amount, 
             },
             success: function(data) {
-                console.log(unitary_value)
+                console.log(amount)
                 alert("Product successfully registered")
             },
-            error: function(data) {
- 
+            error: function(data) { 
                 alert("Erro ao realizar a requisicao")
             }
         });

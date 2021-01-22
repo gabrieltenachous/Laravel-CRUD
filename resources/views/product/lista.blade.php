@@ -14,6 +14,9 @@
 </head>
 
 <body>
+
+    @extends('master')
+    @section("content")
     <div class="container">
         <div class="row">
 
@@ -23,9 +26,9 @@
                 <thead>
                     <tr>
                         <th scope="col">Id:</th>
-                        <th scope="col">Nome:</th>
-                        <th scope="col">Quantidade:</th>
+                        <th scope="col">Nome:</th> 
                         <th scope="col">Code:</th> 
+                        <th scope="col">Quantidade:</th> 
                         <th></th>
                         <th scope="col">Ações</th>
                     </tr>
@@ -66,7 +69,7 @@
     </div>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
-
+@endsection
 
 <script>
     function hidenId(valorUrl) {
@@ -100,9 +103,9 @@
                 modal = $('#url_id').val();
                 table = "<tr>";
                 table += "<td>" + u.id + "</td>";
-                table += "<td>" + u.name + "</td>";
-                table += "<td>" + u.amount + "</td>";
+                table += "<td>" + u.name + "</td>"; 
                 table += "<td>" + u.code + "</td>";
+                table += "<td>" + u.amount + "</td>";
                 table += "<td>" + "<input class='btn btn-danger' type='button' data-toggle='modal' data-target='#exampleModal' onclick='hidenId(" + u.id + ")' value='Excluir'/>" + "</td>";
                 table += "<td>" + "<a href='/produtos/editar/" + u.id + "'>" + "<input class='btn btn-warning' type='button' value='Editar'/>" + " </a>" + "</td> ";
                 table += "<td>" + "<a href='/produto/ver/" + u.id + "'>" + "<input class='btn btn-success' type='button' value='Visualizar'/>" + " </a>" + "</td>";

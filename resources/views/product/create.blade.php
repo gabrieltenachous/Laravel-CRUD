@@ -19,6 +19,7 @@
         <input type="text" name="name" id="name"><br> 
         <label for="">Codigo:</label>
         <input type="text" name="unitary_value" id="code"><br>
+         
         <input type="button" value="Salvar" onclick="cadastraProduto() "/>
         <a href="/produtos/lista/">Voltar</a>
     </form>

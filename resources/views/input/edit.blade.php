@@ -24,17 +24,22 @@
             </div>
             <div class="col-12  form-group">
                 <label for="">Data:</label>
-                <input type="text" class="form-control" name="email" id="date" value="{{$user->date}}"><br>
+                <input type="date" class="form-control" name="email" id="date" value="{{$user->date}}"><br>
             </div>
             <div class="col-12  form-group">
                 <label for="">Valor Unitario:</label>
-                <input class="form-control"  type="text" id="unitary_value" value="{{$user->unitary_value}}"><br>
+                <input class="form-control" type="text" id="unitary_value" value="{{$user->unitary_value}}"><br>
             </div>
+            <div class="col-12  form-group">
+                <label for="">Quantidade:</label>
+                <input class="form-control" type="number" id="amount" value="{{$user->amount}}"><br>
+            </div>  
             <div class="col-12  form-group">
                 <input type="submit" class="btn btn-success" onclick="editarId()"></input>
                 <input type="hidden" id="id-hidden" value="{{$user->id}}">
                 <a href="/inputs/lista/"><button class="btn">Voltar</button> </a>
             </div>
+            <input type="hidden" id="before-amount" value="{{$user -> amount}}">
 
         </div>
     </div>
@@ -68,27 +73,33 @@
         });
     }
 
-    function editarId() {
+    function editarId() { 
         var id = $("#id-hidden").val()
         var product_id = $("#product_id option:selected").val()
         var date = $("#date").val()
-        var unitary_value = $("#unitary_value").maskMoney('unmasked')[0];
+        var unitary_value = $("#unitary_value").maskMoney('unmasked')[0] 
+        var after_amount = $('#amount').val() 
+        var before_amount = $('#before-amount').val()
+        var amount = $('#amount').val()
         $.ajax({
+
             type: "PUT",
             url: 'http://127.0.0.1:8000/api/inputs/' + id,
             dataType: 'json',
             data: {
                 'product_id': product_id,
                 'date': date,
+                'after_amount': after_amount,
+                'before_amount':before_amount,
                 'unitary_value': unitary_value,
+                'amount':amount,
             },
             success: function(data) {
-                console.log(product_id)
-                console.log(unitary_value)
-                console.log(date)
+                console.log(after_amount)
                 alert("Usuário editado com sucesso")
             },
             error: function() {
+
                 alert("Erro ao realizar  requisicao")
             }
         });

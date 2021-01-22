@@ -15,9 +15,9 @@ class Products extends Migration
     {
         Schema::create('products',function(Blueprint $table){
             $table->id('id');
-            $table->string('name');
-            $table->integer('amount');
-            $table->integer('code'); 
+            $table->string('name')->nullable();
+            $table->integer('amount')->nullable();
+            $table->integer('code')->unique(); 
             $table->timestamps();
         });
     }

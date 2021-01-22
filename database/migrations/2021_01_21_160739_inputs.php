@@ -11,11 +11,12 @@ class Inputs extends Migration
         Schema::create('inputs',function(Blueprint $table){
             $table->id('id');
             $table->foreignId('product_id')->constrained();
-            $table->date('after_amount');
-            $table->date('before_amount');
-            $table->float('unitary_value'); 
-            $table->date('date');
-            $table->double('total_value');
+            $table->integer('after_amount')->nullable();
+            $table->integer('before_amount')->nullable();
+            $table->integer('amount')->nullable();
+            $table->float('unitary_value')->nullable(); 
+            $table->date('date')->nullable();
+            $table->double('total_value')->nullable();
             $table->timestamps();
             
         });

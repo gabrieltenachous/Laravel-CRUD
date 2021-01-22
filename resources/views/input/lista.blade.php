@@ -26,8 +26,8 @@
                     <tr>
                         <th scope="col">Id:</th>
                         <th scope="col">Produtos:</th>
-                        <th scope="col">Antes:</th>
-                        <th scope="col">Depois:</th>
+                        <th scope="col">Quantidade Antes:</th>
+                        <th scope="col">Quantidade Agora:</th>
                         <th scope="col">Valor Unitario:</th>
                         <th scope="col">Data:</th>
                         <th scope="col">Valor Total:</th>
@@ -38,7 +38,11 @@
                 <tbody id="idTbody">
 
                 </tbody>
-
+                <div class="form-group">
+                    <label for="name">Produto</label>
+                    <select type="hidden" name="products" class="form-control" id="products_id">
+                    </select>
+                </div>
             </table>
         </div>
         <!-- Modal -->
@@ -54,6 +58,8 @@
                     <div class="modal-body">
                         <p id="idModal">Voce quer exluir esse produto?</p>
                     </div>
+
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
 
@@ -62,7 +68,9 @@
                     </div>
                 </div>
             </div>
-            <input type="hidden" id="url_id">
+            <input type="hidden" id="ddproduct" value="">
+
+
         </div>
     </div>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -70,6 +78,25 @@
 @endsection
 
 <script>
+    carregarProdutos();
+
+    function carregarProdutos() {
+        $.ajax({
+            type: "GET",
+            url: 'http://127.0.0.1:8000/api/products',
+            dataType: 'json',
+            success: function(data) {
+                data.map(u => {
+                    var table = "<option value='" + u.id + "'>" + u.name + "</option>"
+                    $('#products_id').append(table);
+                })
+            },
+            error: function() {
+                alert("Erro ao realizar a requisicao")
+            }
+        });
+    }
+
     function hidenId(valorUrl) {
         $('#url_id').val(valorUrl);
         console.log($('#url_id').val());
@@ -116,17 +143,28 @@
 
             data.map(u => {
                 modal = $('#url_id').val();
+                nome = $('#product_id').val();
+                console.log(nome)
                 table = "<tr>";
                 table += "<td>" + u.id + "</td>";
                 table += "<td>" + u.product.name + "</td>";
-                table += "<td>" + u.after_amount + "</td>";
                 table += "<td>" + u.before_amount + "</td>";
+                table += "<td>" + u.after_amount + "</td>";
                 table += "<td>" + u.unitary_value + "</td>";
                 table += "<td>" + u.date + "</td>";
-                table += "<td>" + u.total_value + "</td>";
-                table += "<td>" + "<input class='btn btn-danger' type='button' data-toggle='modal' data-target='#exampleModal' onclick='hidenId(" + u.id + ")' value='Excluir'/>" + "</td>";
-                table += "<td>" + "<a href='/inputs/editar/" + u.id + "'>" + "<input class='btn btn-warning' type='button' value='Editar'/>" + " </a>" + "</td> ";
-                table += "<td>" + "<a href='/inputs/ver/" + u.id + "'>" + "<input class='btn btn-success' type='button' value='Visualizar'/>" + " </a>" + "</td>";
+                table += "<td>R$ " + u.total_value + "</td>";
+                for (var i = 0; i < i.length; i++) {
+                    if (u.product.name == nome) {
+                        table += "<td>" + "<input class='btn btn-danger' type='button' data-toggle='modal' data-target='#exampleModal' onclick='hidenId(" + u.id + ")' value='Excluir'/>" + "</td>";
+                        table += "<td>" + "<a href='/inputs/editar/" + u.id + "'>" + "<input class='btn btn-warning' type='button' value='Editar'/>" + " </a>" + "</td> ";
+                        table += "<td>" + "<a href='/inputs/ver/" + u.id + "'>" + "<input class='btn btn-success' type='button' value='Visualizar'/>" + " </a>" + "</td>";
+
+                    } else {
+                        table += "<td></td>";
+                        table += "<td></td>";
+                        table += "<td></td>";
+                    }
+                }
                 table += "</tr>"
                 $('#idTbody').append(table)
             })
