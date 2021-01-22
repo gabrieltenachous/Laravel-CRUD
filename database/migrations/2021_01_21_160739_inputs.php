@@ -2,8 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
-use PHPUnit\Framework\Constraint\Constraint;
+use Illuminate\Support\Facades\Schema; 
 
 class Inputs extends Migration
 { 
@@ -17,6 +16,7 @@ class Inputs extends Migration
             $table->float('unitary_value'); 
             $table->date('date');
             $table->double('total_value');
+            $table->timestamps();
             
         });
     }

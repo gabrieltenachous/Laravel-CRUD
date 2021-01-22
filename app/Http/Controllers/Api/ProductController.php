@@ -3,18 +3,18 @@
 namespace App\Http\Controllers\Api;
 //http://127.0.0.1:8000/api/produtos
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Products;
+use App\Models\Product;
+use Illuminate\Http\Request; 
 
-class ProductsController extends Controller
+class ProductController extends Controller
 {
     public function getAll()
     {
-        return Products::all();
+        return Product::all();
     }
     public function get($id)
     {
-        return Products::find($id);
+        return Product::find($id);
     }
 
     public function create()
@@ -25,7 +25,7 @@ class ProductsController extends Controller
 
     public function post(Request $request)
     {
-        $products = new Products();
+        $products = new Product();
         $products->name = $request->name;
         $products->amount  = $request->amount;
         $products->code = $request->code;
@@ -37,7 +37,7 @@ class ProductsController extends Controller
 
     public function put(Request $request, $id)
     {
-        $products = Products::find($id);
+        $products = Product::find($id);
         if (is_null($products)) {
             return response()->json(['message' => 'User Not Found'], 404);
         }
@@ -48,7 +48,7 @@ class ProductsController extends Controller
     public function delete(Request $request, $id)
     {
 
-        $products = Products::find($id);
+        $products = Product::find($id);
         if (is_null($products)) {
             return response()->json(['message' => 'User Not Found'], 404);
         }

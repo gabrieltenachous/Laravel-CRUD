@@ -53,8 +53,7 @@
             url: 'http://127.0.0.1:8000/api/products',
             dataType: 'json',
             success: function(data) {
-                data.map(u => {
-                    console.log("u --> ", u.name)
+                data.map(u => { 
                     var table = "<option value='" + u.id + "'>" + u.name + "</option>"
                     $('#products_id').append(table);
                 })
@@ -79,15 +78,11 @@
                 'date': date,
             },
             success: function(data) {
-                console.log(data)
+                console.log(unitary_value)
                 alert("Product successfully registered")
             },
             error: function(data) {
-
-                console.log(products_id)
-                console.log(unitary_value)
-                console.log(date)
-                console.log(data)
+ 
                 alert("Erro ao realizar a requisicao")
             }
         });

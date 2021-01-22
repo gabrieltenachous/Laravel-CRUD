@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Api;
-//http://127.0.0.1:8000/api/produtos
+namespace App\Http\Controllers\Api; 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Inputs;
+use App\Models\Input;
 
-class InputsController extends Controller
+class InputController extends Controller
 {
     public function getAll()
     {
-        return Inputs::all();
+        //return Product::all(); 
+        return Input::with('product')->get()->toArray();
     }
     public function get($id)
     {
-        return Inputs::find($id);
+        return Input::find($id);
     }
 
     public function create()
@@ -25,20 +25,22 @@ class InputsController extends Controller
 
     public function post(Request $request)
     {
-        $inputs = new Inputs();
+        $inputs = new Input();
         $inputs->product_id = $request->product_id;
         $inputs->after_amount  = $request->before_amount;
+        $inputs->unitary_value  = $request->unitary_value;
         $inputs->date = $request->date;
         $inputs->total_value = $request->total_value;
-        $inputs->save();
+        $inputs->save();    
         return response()->json([
-            'message'=>'Product criado com sucesso!',
-            'data'=>$inputs],200);
+            'message' => 'Product criado com sucesso!',
+            'data' => $inputs
+        ], 200);
     }
 
     public function put(Request $request, $id)
     {
-        $inputs = Inputs::find($id);
+        $inputs = Input::find($id);
         if (is_null($inputs)) {
             return response()->json(['message' => 'User Not Found'], 404);
         }
@@ -49,7 +51,7 @@ class InputsController extends Controller
     public function delete(Request $request, $id)
     {
 
-        $inputs = Inputs::find($id);
+        $inputs = Input::find($id);
         if (is_null($inputs)) {
             return response()->json(['message' => 'User Not Found'], 404);
         }

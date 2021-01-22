@@ -7,11 +7,11 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 
-class UsersController extends Controller
+class UserController extends Controller
 {
     public function create()
     {
-        return view('users.create');
+        return view('user.create');
     }
     public function store(Request $request)
     {
@@ -43,18 +43,18 @@ class UsersController extends Controller
     public function list()
     {
         $user = User::all();
-        return view('users.lista', ['users' => $user]);
+        return view('user.lista', ['users' => $user]);
     }
 
     public function edit($id, Request $request)
     {
         $user = User::findOrFail($id);
-        return view('users.edit', ['user' => $user]);
+        return view('user.edit', ['user' => $user]);
     }
     public function deletar($id)
     {
         $user = User::findOrFail($id);
-        return View('users.deletar', ['user' => $user]);
+        return View('user.deletar', ['user' => $user]);
     }
     public function destroy($id)
     {
@@ -65,6 +65,6 @@ class UsersController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-        return view('users.show', ['user' => $user]);
+        return view('user.show', ['user' => $user]);
     }
 }

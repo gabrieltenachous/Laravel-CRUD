@@ -6,7 +6,7 @@
     <title>Title</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
@@ -21,7 +21,7 @@
         <input type="text" name="email" id="email"><br>
         <label for="">Senha:</label>
         <input type="password" name="password" id="password"><br>
-        <input type="button" value="Salvar" onclick="cadastraUsuario()"/>
+        <input type="button" value="Salvar" onclick="cadastraUsuario()" />
         <a href="/users/list/">Voltar</a>
     </form>
 
@@ -39,11 +39,11 @@
                 data: {
                     'name': name,
                     'email': email,
-                    'password':password,
+                    'password': password,
                 },
                 //headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 success: function(data) {
-                   
+
                     console.log(data)
                     alert("Cadastro por sucesso");
                 },
@@ -53,8 +53,8 @@
             });
         }
     </script>
-    
-    
+
+
 </body>
 
 </html>

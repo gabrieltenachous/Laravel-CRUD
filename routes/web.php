@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\Admin\UsersController;
-use App\Http\Controllers\Admin\ProductsController;
+use App\Http\Controllers\Admin\UserController; 
 use Illuminate\Support\Facades\Route;  
-use App\Http\Controllers\Admin\InputsController;
+use App\Http\Controllers\Admin\InputController;
+use App\Http\Controllers\Admin\ProductController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,44 +23,44 @@ Route::get('/', function () {
  
 //---------------------------- USUARIO  -----------------------------
 //criar
-Route::post('users/create', [UsersController::class, 'store'])->name('registrar_produto');
-Route::get('users/create', [UsersController::class, 'create']);
+Route::post('users/create', [UserController::class, 'store'])->name('registrar_produto');
+Route::get('users/create', [UserController::class, 'create']);
 //mostrar
-Route::get('/users/ver/{id}', [UsersController::class, 'show']); 
+Route::get('/users/ver/{id}', [UserController::class, 'show']); 
 //edit
-Route::get('/users/editar/{id}',[UsersController::class, 'edit']);
-Route::post('/users/editar/{id}',[UsersController::class, 'update'])->name('alterar_user');
+Route::get('/users/editar/{id}',[UserController::class, 'edit']);
+Route::post('/users/editar/{id}',[UserController::class, 'update'])->name('alterar_user');
 //deletar
-Route::get('/users/excluir/{id}',[UsersController::class, 'deletar']);
-Route::post('/users/excluir/{id}',[UsersController::class, 'destroy'])->name('excluir_user');
+Route::get('/users/excluir/{id}',[UserController::class, 'deletar']);
+Route::post('/users/excluir/{id}',[UserController::class, 'destroy'])->name('excluir_user');
 //lista
-Route::get('/users/list',[UsersController::class,'list']); 
+Route::get('/users/list',[UserController::class,'list']); 
 
 //------------------------- PRODUTOS -------------------------------
 //criar
-Route::get('produto/create',[ProductsController::class,'create']);  
-Route::post('produto/create',[ProductsController::class, 'update'])->name('add_produto');
+Route::get('produtos/create',[ProductController::class,'create']);  
+Route::post('produtos/create',[ProductController::class, 'update'])->name('add_produto');
 //mostrar
-Route::get('/produto/ver/{id}', [ProductsController::class, 'show']); 
+Route::get('/produtos/ver/{id}', [ProductController::class, 'show']); 
 //edit
-Route::get('/produto/editar/{id}',[ProductsController::class, 'edit']);
-Route::post('/produto/editar/{id}',[ProductsController::class, 'update'])->name('alterar_produto');
+Route::get('/produtos/editar/{id}',[ProductController::class, 'edit']);
+Route::post('/produtos/editar/{id}',[ProductController::class, 'update'])->name('alterar_produto');
 //deletar
-Route::get('/produto/excluir/{id}',[ProductsController::class, 'deletar']);
-Route::post('/produto/excluir/{id}',[ProductsController::class, 'destroy'])->name('excluir_produto');
+Route::get('/produtos/excluir/{id}',[ProductController::class, 'deletar']);
+Route::post('/produtos/excluir/{id}',[ProductController::class, 'destroy'])->name('excluir_produto');
 //lista
-Route::get('/produtos/lista',[ProductsController::class,'list']); 
+Route::get('/produtos/lista',[ProductController::class,'list']); 
 //------------------------- INPUTS -------------------------------
 //criar
-Route::get('inputs/create',[InputsController::class,'create']);  
-Route::post('inputs/create',[InputsController::class, 'update'])->name('add_produto');
+Route::get('inputs/create',[InputController::class,'create']);  
+Route::post('inputs/create',[InputController::class, 'update'])->name('add_produto');
 //mostrar
-Route::get('/inputs/ver/{id}', [InputsController::class, 'show']); 
+Route::get('/inputs/ver/{id}', [InputController::class, 'show']); 
 //edit
-Route::get('/inputs/editar/{id}',[InputsController::class, 'edit']);
-Route::post('/inputs/editar/{id}',[InputsController::class, 'update'])->name('alterar_produto');
+Route::get('/inputs/editar/{id}',[InputController::class, 'edit']);
+Route::post('/inputs/editar/{id}',[InputController::class, 'update'])->name('alterar_produto');
 //deletar
-Route::get('/inputs/excluir/{id}',[InputsController::class, 'deletar']);
-Route::post('/inputs/excluir/{id}',[InputsController::class, 'destroy'])->name('excluir_produto');
+Route::get('/inputs/excluir/{id}',[InputController::class, 'deletar']);
+Route::post('/inputs/excluir/{id}',[InputController::class, 'destroy'])->name('excluir_produto');
 //lista
-Route::get('/inputs/lista',[InputsController::class,'list']); 
+Route::get('/inputs/lista',[InputController::class,'list']); 

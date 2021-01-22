@@ -3,19 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Inputs;
+use App\Models\Input;
 use Illuminate\Http\Request;
 use Illuminate\Database\QueryException;
 
-class InputsController extends Controller
+class InputController extends Controller
 {
     public function create(Request $request)
-    {  
-        return view('inputs.create');
+    {
+        return view('input.create');
     }
+
     public function store(Request $request)
     {
-        Inputs::create([
+        Input::create([
             'product_id' => $request->product_id,
             'after_amount' => $request->after_amount,
             'before_amount' => $request->before_amount,
@@ -25,14 +26,14 @@ class InputsController extends Controller
         ]);
         return "Criado com sucesso  <a href='./inputs'>Voltar para Lista</a>";
     }
-    
+
     public function update(Request $request, $id)
     {
-        $produtos = Inputs::findOrFail($id);
+        $produtos = Input::findOrFail($id);
         try {
 
             $produtos->update(
-                [ 
+                [
                     'product_id' => $request->product_id,
                     'after_amount' => $request->after_amount,
                     'before_amount' => $request->before_amount,
@@ -48,31 +49,29 @@ class InputsController extends Controller
     }
     public function list()
     {
-        $produto = Inputs::all();
-        return view('inputs.lista', ['inputs' => $produto]);
+        $produto = Input::all();
+        return view('input.lista', ['input' => $produto]);
     }
 
     public function edit($id, Request $request)
     {
-        $produto = Inputs::findOrFail($id);
-        return view('inputs.edit', ['user' => $produto]);
+        $produto = Input::findOrFail($id);
+        return view('input.edit', ['user' => $produto]);
     }
     public function deletar($id)
     {
-        $produto = Inputs::findOrFail($id);
+        $produto = Input::findOrFail($id);
         return View('inputs.deletar', ['input' => $produto]);
     }
     public function destroy($id)
     {
-        $produto = Inputs::findOrFail($id);
+        $produto = Input::findOrFail($id);
         $produto->delete();
         return "Produtos Excluido <a href='/users/list'>Voltar para Lista</a>";
     }
     public function show($id)
     {
-        $produto = Inputs::findOrFail($id);
-        return view('inputs.show', ['input' => $produto]);
+        $produto = Input::findOrFail($id);
+        return view('input.show', ['input' => $produto]);
     }
-
-    
 }

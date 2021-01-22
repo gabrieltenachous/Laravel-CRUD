@@ -17,18 +17,15 @@
     <div class="container">
         <div class="row">
 
-            <a href="/inputs/create">
+            <a href="/produtos/create">
                 <input id="" class="btn btn-primary" type="button" value="Criar Usuario"></a>
             <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">Id:</th>
-                        <th scope="col">Produtos:</th>
-                        <th scope="col">Antes:</th>
-                        <th scope="col">Depois:</th>
-                        <th scope="col">Valor Unitario:</th>
-                        <th scope="col">Data:</th>
-                        <th scope="col">Valor Total:</th>
+                        <th scope="col">Nome:</th>
+                        <th scope="col">Quantidade:</th>
+                        <th scope="col">Code:</th> 
                         <th></th>
                         <th scope="col">Ações</th>
                     </tr>
@@ -37,11 +34,12 @@
 
                 </tbody>
 
-                    @foreach($inputs as $input)
-                            <p>{{$input->product_id->name}</p>
-                    @endforeach
+
             </table>
         </div>
+
+
+
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -75,29 +73,12 @@
         $('#url_id').val(valorUrl);
         console.log($('#url_id').val());
     }
-    
-    $.ajax({
-        type: "GET",
-        url: 'http://127.0.0.1:8000/api/users',
-        dataType: 'json',
-        //headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-        success: function(data) {
-            data.map(u => {
-                table = u.name;
-                $('#product_id').append(table)
-            })
-
-        },
-        error: function() {
-            alert("Erro ao realizar  requisicao");
-        }
-    });
 
     function excluirId() {
         var valorUrl = $('#url_id').val();
         $.ajax({
             type: "DELETE",
-            url: 'http://127.0.0.1:8000/api/inputs/' + valorUrl,
+            url: 'http://127.0.0.1:8000/api/products/' + valorUrl,
             dataType: 'json',
             success: function(data) {
                 alert("Exclusão Correta");
@@ -111,23 +92,20 @@
 
     $.ajax({
         type: "GET",
-        url: 'http://127.0.0.1:8000/api/inputs/',
+        url: 'http://127.0.0.1:8000/api/products/',
         dataType: 'json',
         //headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         success: function(data) {
-            data.map(u => {
+            data.map(u => { 
                 modal = $('#url_id').val();
                 table = "<tr>";
                 table += "<td>" + u.id + "</td>";
-                table += "<td id='product_id'>" + u.product_id + "</td>";
-                table += "<td>" + u.after_amount + "</td>";
-                table += "<td>" + u.before_amount + "</td>";
-                table += "<td>" + u.unitary_value + "</td>";
-                table += "<td>" + u.date + "</td>";
-                table += "<td>" + u.total_value + "</td>";
+                table += "<td>" + u.name + "</td>";
+                table += "<td>" + u.amount + "</td>";
+                table += "<td>" + u.code + "</td>";
                 table += "<td>" + "<input class='btn btn-danger' type='button' data-toggle='modal' data-target='#exampleModal' onclick='hidenId(" + u.id + ")' value='Excluir'/>" + "</td>";
-                table += "<td>" + "<a href='/inputs/editar/" + u.id + "'>" + "<input class='btn btn-warning' type='button' value='Editar'/>" + " </a>" + "</td> ";
-                table += "<td>" + "<a href='/inputs/ver/" + u.id + "'>" + "<input class='btn btn-success' type='button' value='Visualizar'/>" + " </a>" + "</td>";
+                table += "<td>" + "<a href='/produtos/editar/" + u.id + "'>" + "<input class='btn btn-warning' type='button' value='Editar'/>" + " </a>" + "</td> ";
+                table += "<td>" + "<a href='/produto/ver/" + u.id + "'>" + "<input class='btn btn-success' type='button' value='Visualizar'/>" + " </a>" + "</td>";
                 table += "</tr>"
                 $('#idTbody').append(table)
             })
