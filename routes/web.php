@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;  
 use App\Http\Controllers\Admin\InputController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\SaleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,3 +65,33 @@ Route::get('/inputs/excluir/{id}',[InputController::class, 'deletar']);
 Route::post('/inputs/excluir/{id}',[InputController::class, 'destroy'])->name('excluir_produto');
 //lista
 Route::get('/inputs/lista',[InputController::class,'list']); 
+//------------------------- Sale -------------------------------
+//criar
+Route::get('venda/create',[SaleController::class,'create']);  
+Route::post('venda/create',[SaleController::class, 'update'])->name('add_produto');
+//mostrar
+Route::get('/venda/ver/{id}', [SaleController::class, 'show']); 
+//edit
+Route::get('/venda/editar/{id}',[SaleController::class, 'edit']);
+Route::post('/venda/editar/{id}',[SaleController::class, 'update'])->name('alterar_produto');
+//deletar
+Route::get('/venda/excluir/{id}',[SaleController::class, 'deletar']);
+Route::post('/venda/excluir/{id}',[SaleController::class, 'destroy'])->name('excluir_produto');
+//lista
+Route::get('/venda/lista',[SaleController::class,'list']); 
+
+
+//------------------------- SaleProduct-------------------------------
+//criar
+Route::get('Venda_dos_Produtos/create',[SaleController::class,'create']);  
+Route::post('Venda_dos_Produtos/create',[SaleController::class, 'update'])->name('add_produto');
+//mostrar
+Route::get('/Venda_dos_Produtos/ver/{id}', [SaleController::class, 'show']); 
+//edit
+Route::get('/Venda_dos_Produtos/editar/{id}',[SaleController::class, 'edit']);
+Route::post('/Venda_dos_Produtos/editar/{id}',[SaleController::class, 'update'])->name('alterar_produto');
+//deletar
+Route::get('/Venda_dos_Produtos/excluir/{id}',[SaleController::class, 'deletar']);
+Route::post('/Venda_dos_Produtos/excluir/{id}',[SaleController::class, 'destroy'])->name('excluir_produto');
+//lista
+Route::get('/Venda_dos_Produtos/lista',[SaleController::class,'list']); 

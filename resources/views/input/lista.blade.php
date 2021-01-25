@@ -38,11 +38,7 @@
                 <tbody id="idTbody">
 
                 </tbody>
-                <div class="form-group">
-                    <label for="name">Produto</label>
-                    <select type="hidden" name="products" class="form-control" id="products_id">
-                    </select>
-                </div>
+
             </table>
         </div>
         <!-- Modal -->
@@ -68,7 +64,8 @@
                     </div>
                 </div>
             </div>
-            <input type="hidden" id="ddproduct" value="">
+
+            <input type="hidden" id="url_id">
 
 
         </div>
@@ -104,7 +101,7 @@
 
     $.ajax({
         type: "GET",
-        url: 'http://127.0.0.1:8000/api/users',
+        url: 'http://127.0.0.1:8000/api/inputs',
         dataType: 'json',
         success: function(data) {
             data.map(u => {
@@ -120,6 +117,7 @@
 
     function excluirId() {
         var valorUrl = $('#url_id').val();
+        console.log(valorUrl)
         $.ajax({
             type: "DELETE",
             url: 'http://127.0.0.1:8000/api/inputs/' + valorUrl,
@@ -153,17 +151,16 @@
                 table += "<td>" + u.unitary_value + "</td>";
                 table += "<td>" + u.date + "</td>";
                 table += "<td>R$ " + u.total_value + "</td>";
-                for (var i = 0; i < i.length; i++) {
-                    if (u.product.name == nome) {
-                        table += "<td>" + "<input class='btn btn-danger' type='button' data-toggle='modal' data-target='#exampleModal' onclick='hidenId(" + u.id + ")' value='Excluir'/>" + "</td>";
-                        table += "<td>" + "<a href='/inputs/editar/" + u.id + "'>" + "<input class='btn btn-warning' type='button' value='Editar'/>" + " </a>" + "</td> ";
-                        table += "<td>" + "<a href='/inputs/ver/" + u.id + "'>" + "<input class='btn btn-success' type='button' value='Visualizar'/>" + " </a>" + "</td>";
+                if (u.after_amount == u.product.amount) {
 
-                    } else {
-                        table += "<td></td>";
-                        table += "<td></td>";
-                        table += "<td></td>";
-                    }
+                    table += "<td>" + "<input class='btn btn-danger' type='button' data-toggle='modal' data-target='#exampleModal' onclick='hidenId(" + u.id + ")' value='Excluir'/>" + "</td>";
+                    table += "<td>" + "<a href='/inputs/editar/" + u.id + "'>" + "<input class='btn btn-warning' type='button' value='Editar'/>" + " </a>" + "</td> ";
+                    table += "<td>" + "<a href='/inputs/ver/" + u.id + "'>" + "<input class='btn btn-success' type='button' value='Visualizar'/>" + " </a>" + "</td>";
+
+                }else{
+                    table += "<td></td>"
+                    table += "<td></td>"
+                    table += "<td></td>"
                 }
                 table += "</tr>"
                 $('#idTbody').append(table)

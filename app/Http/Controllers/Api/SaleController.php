@@ -3,58 +3,58 @@
 namespace App\Http\Controllers\Api;
 //http://127.0.0.1:8000/api/produtos
 use App\Http\Controllers\Controller;
-use App\Models\Product;
+use App\Models\Sale;
 use Illuminate\Http\Request; 
 
-class ProductController extends Controller
+class SaleController extends Controller
 {
     public function getAll()
     {
-        return Product::all();
+        return Sale::all();
     }
     public function get($id)
     {
-        return Product::find($id);
+        return Sale::find($id);
     }
 
     public function create()
     {
         
-        return view('products.create');
+        return view('sales.create');
     }
 
 
     public function post(Request $request)
     {
-        $products = new Product();
-        $products->name = $request->name;
-        $products->amount  = $request->amount;
-        $products->code = $request->code;
-        $products->save();
+        $sale = new Sale();
+        $sale->date = $request->date;
+        $sale->user_id  = $request->user_id;
+        $sale->total_value = $request->total_value;
+        $sale->save();
         return response()->json([
             'message'=>'Product criado com sucesso!',
-            'data'=>$products],200);
+            'data'=>$sale],200);
     }
 
     public function put(Request $request, $id)
     {
-        $products = Product::find($id);
-        if (is_null($products)) {
+        $sale = Sale::find($id);
+        if (is_null($sale)) {
             return response()->json(['message' => 'User Not Found'], 404);
         }
-        $products->update($request->all());
-        return response($products, 200);
+        $sale->update($request->all());
+        return response($sale, 200);
     }
 
     public function delete(Request $request, $id)
     {
 
-        $products = Product::find($id);
+        $sale = Sale::find($id);
     
-        if (is_null($products)) {
+        if (is_null($sale)) {
             return response()->json(['message' => 'User Not Found'], 404);
         }
-        $products->delete($request->all());
-        return response($products, 200);
+        $sale->delete($request->all());
+        return response($sale, 200);
     }
 }
