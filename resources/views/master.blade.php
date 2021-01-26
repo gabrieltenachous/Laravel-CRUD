@@ -16,7 +16,7 @@
                 <a class="nav-link" href="/users/list">Usuarios</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/seles/list">Vendas</a>
+                <a class="nav-link" href="/venda/lista">Vendas</a>
             </li>
             <!-- <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
@@ -27,7 +27,7 @@
             </li> -->
         </ul>
         <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" >
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>

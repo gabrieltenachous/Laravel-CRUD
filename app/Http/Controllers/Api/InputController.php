@@ -33,6 +33,7 @@ class InputController extends Controller
         $inputs->unitary_value  = $request->unitary_value;
         $inputs->date = $request->date;
         $inputs->total_value = $request->amount * $request->unitary_value;
+        
         $products = Product::find($request->product_id);
 
         $inputs->before_amount = $products->amount;

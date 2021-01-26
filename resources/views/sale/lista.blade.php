@@ -12,7 +12,29 @@
   <body>
       @extends('master')
       @section('content')
-        
+      <div class="container">
+        <div class="row">
+
+            <a href="/produtos/create">
+                <input id="" class="btn btn-primary" type="button" value="Criar Usuario"></a>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Id:</th>
+                        <th scope="col">Usuario:</th> 
+                        <th scope="col">Valor Total:</th>  
+                        <th></th>
+                        <th scope="col">Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="idTbody">
+
+                </tbody>
+
+
+            </table>
+        </div>
+
       @endsection
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

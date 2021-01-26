@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\InputController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SaleController;
+use App\Http\Controllers\Admin\SaleProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -83,15 +84,15 @@ Route::get('/venda/lista',[SaleController::class,'list']);
 
 //------------------------- SaleProduct-------------------------------
 //criar
-Route::get('Venda_dos_Produtos/create',[SaleController::class,'create']);  
-Route::post('Venda_dos_Produtos/create',[SaleController::class, 'update'])->name('add_produto');
+Route::get('Venda_dos_Produtos/create',[SaleProductController::class,'create']);  
+Route::post('Venda_dos_Produtos/create',[SaleProductController::class, 'update'])->name('add_produto');
 //mostrar
-Route::get('/Venda_dos_Produtos/ver/{id}', [SaleController::class, 'show']); 
+Route::get('/Venda_dos_Produtos/ver/{id}', [SaleProductController::class, 'show']); 
 //edit
-Route::get('/Venda_dos_Produtos/editar/{id}',[SaleController::class, 'edit']);
-Route::post('/Venda_dos_Produtos/editar/{id}',[SaleController::class, 'update'])->name('alterar_produto');
+Route::get('/Venda_dos_Produtos/editar/{id}',[SaleProductController::class, 'edit']);
+Route::post('/Venda_dos_Produtos/editar/{id}',[SaleProductController::class, 'update'])->name('alterar_produto');
 //deletar
-Route::get('/Venda_dos_Produtos/excluir/{id}',[SaleController::class, 'deletar']);
-Route::post('/Venda_dos_Produtos/excluir/{id}',[SaleController::class, 'destroy'])->name('excluir_produto');
+Route::get('/Venda_dos_Produtos/excluir/{id}',[SaleProductController::class, 'deletar']);
+Route::post('/Venda_dos_Produtos/excluir/{id}',[SaleProductController::class, 'destroy'])->name('excluir_produto');
 //lista
-Route::get('/Venda_dos_Produtos/lista',[SaleController::class,'list']); 
+Route::get('/Venda_dos_Produtos/lista',[SaleProductController::class,'list']); 

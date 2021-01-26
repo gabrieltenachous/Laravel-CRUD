@@ -24,17 +24,17 @@
       @csrf
       <div class="form-group">
         <label for="name">Produto</label>
-        <select name="products" class="form-control" id="products_id">
+        <select name="products"  class="form-control" id="products_id">
         </select>
       </div> 
       <div class="form-group">
         <label for="preco">Valor unitário</label>
-        <input required type="number" name="preco" type="text" class="form-control" id="unitary-value" placeholder="Valor unitário">
+        <input required type="number" name="preco" type="text" value="13" class="form-control" id="unitary-value" placeholder="Valor unitário">
       </div>
       <div class="form-group">
         <label for="preco">Quantidade</label>
 
-        <input requerd type="number" ng-model="vm.numero1" name="amount" class="form-control" id="amount" placeholder="Quantidade">
+        <input requerd type="number" ng-model="vm.numero1" name="amount" value="12" class="form-control" id="amount" placeholder="Quantidade">
       </div>
       <div class="form-group">
         <label for="preco">Valor Total</label>
