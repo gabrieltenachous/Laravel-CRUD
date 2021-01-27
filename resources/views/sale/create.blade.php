@@ -23,6 +23,7 @@
         <form action="" method="POST">
             @csrf
 
+            <a href="/venda/lista">Ir para Lista</a>
             <div class="form-group">
                 <label for="name">Produto</label>
                 <select name="products" class="form-control" id="products_id">
@@ -31,7 +32,7 @@
             <div class="form-group">
                 <label for="preco">Valor unitário</label>
                 <div id="bodyId">
-                    <input disabled required value='2' name='preco' type='text' value='13' class='form-control' id='unitary-value' placeholder='Valor unitário'>
+                    <input disabled required value='2' name='preco' type='text' value='13' class='form-control' id='unitary-value' placeholder='Valor unitário'>    
                 </div>
             </div>
             <div class="form-group">
@@ -99,6 +100,7 @@
             $(".product_td").each(function() {
                     produtos_id_compra.push($(this).html())
                 }),
+                
                 $(".value_td").each(function() {
                     unitary_value_compra.push($(this).html())
                 }),

@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Api;
 //http://127.0.0.1:8000/api/produtos
 use App\Http\Controllers\Controller;
 use App\Models\Product;
-use Illuminate\Http\Request; 
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     public function getAll()
     {
-        return Product::all();
+        return Product::with('inputs.product', 'saleproducts.product','saleproducts.sale')->get()->toArray();
     }
     public function get($id)
     {
@@ -19,7 +19,7 @@ class ProductController extends Controller
 
     public function create()
     {
-        
+
         return view('products.create');
     }
 
@@ -32,8 +32,9 @@ class ProductController extends Controller
         $products->code = $request->code;
         $products->save();
         return response()->json([
-            'message'=>'Product criado com sucesso!',
-            'data'=>$products],200);
+            'message' => 'Product criado com sucesso!',
+            'data' => $products
+        ], 200);
     }
 
     public function put(Request $request, $id)
@@ -50,7 +51,7 @@ class ProductController extends Controller
     {
 
         $products = Product::find($id);
-    
+
         if (is_null($products)) {
             return response()->json(['message' => 'User Not Found'], 404);
         }

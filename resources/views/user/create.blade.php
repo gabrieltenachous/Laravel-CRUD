@@ -40,8 +40,7 @@
                     'name': name,
                     'email': email,
                     'password': password,
-                },
-                //headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                }, 
                 success: function(data) {
 
                     console.log(data)

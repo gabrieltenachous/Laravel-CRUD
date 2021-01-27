@@ -23,13 +23,14 @@
                 <input id="" class="btn btn-primary" type="button" value="Criar Entrada"></a>
             <table class="table">
                 <thead>
-                    <tr>
-                        <th scope="col">Id:</th>
-                        <th scope="col">Produtos:</th>
-                        <th scope="col">Quantidade Antes:</th>
-                        <th scope="col">Quantidade Agora:</th>
-                        <th scope="col">Valor Unitario:</th>
+                    <tr> 
+                    <th scope="col">Produto</th>
+                        <th scope="col">Tipo:</th>
                         <th scope="col">Data:</th>
+                        <th scope="col">Quantidade:</th>
+                        <th scope="col">Quantidade Antes:</th>
+                        <th scope="col">Quantidade Depois:</th>
+                        <th scope="col">Valor Unitario:</th>
                         <th scope="col">Valor Total:</th>
                         <th></th>
                         <th scope="col">Ações</th>
@@ -131,41 +132,55 @@
             }
         });
     }
-
+    const formatter = new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+        minimumFractionDigits: 2
+    })
+    entrada = [];
+    saida = [];
     $.ajax({
         type: "GET",
-        url: 'http://127.0.0.1:8000/api/inputs/',
+        url: 'http://127.0.0.1:8000/api/products/',
         dataType: 'json',
-        //headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         success: function(data) {
 
+
+
             data.map(u => {
-                modal = $('#url_id').val();
-                nome = $('#product_id').val();
-                console.log(nome)
-                table = "<tr>";
-                table += "<td>" + u.id + "</td>";
-                table += "<td>" + u.product.name + "</td>";
-                table += "<td>" + u.before_amount + "</td>";
-                table += "<td>" + u.after_amount + "</td>";
-                table += "<td>" + u.unitary_value + "</td>";
-                table += "<td>" + u.date + "</td>";
-                table += "<td>R$ " + u.total_value + "</td>";
-                if (u.after_amount == u.product.amount) {
+                u.inputs.map(inp => {
+                    entrada.push(inp);
+                })
 
-                    table += "<td>" + "<input class='btn btn-danger' type='button' data-toggle='modal' data-target='#exampleModal' onclick='hidenId(" + u.id + ")' value='Excluir'/>" + "</td>";
-                    table += "<td>" + "<a href='/inputs/editar/" + u.id + "'>" + "<input class='btn btn-warning' type='button' value='Editar'/>" + " </a>" + "</td> ";
-                    table += "<td>" + "<a href='/inputs/ver/" + u.id + "'>" + "<input class='btn btn-success' type='button' value='Visualizar'/>" + " </a>" + "</td>";
+                u.saleproducts.map(inp => {
+                    saida.push(inp); 
+                })
 
-                }else{
-                    table += "<td></td>"
-                    table += "<td></td>"
-                    table += "<td></td>"
+
+                var entradaSaida = entrada.concat(saida);
+
+                function compare(a, b) {
+                    return a.created_at < b.created_at ? -1 : a.created_at > b.created_at ? 1 : 0;
                 }
-                table += "</tr>"
-                $('#idTbody').append(table)
-            })
+                entradaSaida.sort(compare);
 
+
+                entradaSaida.map(inp => {
+                    console.log(inp)
+                    $table = "<tr>"; 
+                    $table +="<td>"+inp.product.name+"</td>";
+                    $table += "<td " + (inp.date != null ? ">Entrada" : ">Saída") + "</td>";
+                    $table += "<td>" + (inp.date != null ? inp.date : inp.sale.date) + "</td>";
+                    $table += "<td>" + inp.amount + "</td>";
+                    $table += "<td>" + inp.before_amount + "</td>";
+                    $table += "<td>" + inp.after_amount + "</td>";
+                    $table += "<td>" + formatter.format(inp.unitary_value) + "</td>";
+                    $table += "<td>" + formatter.format(inp.total_value) + "</td></tr>";
+                    $('#idTbody').append($table);
+                })
+
+
+            })
         },
         error: function() {
             alert("Erro ao realizar  requisicao");

@@ -15,8 +15,8 @@
 
 <body>
 
-@extends('master')
-@section("content")
+    @extends('master')
+    @section("content")
     <div class="container">
         <div class="row">
 
@@ -26,7 +26,7 @@
                 <thead>
                     <tr>
                         <th scope="col">Usuario:</th>
-                        <th scope="col">Data:</th>
+                        <th scope="col">Email:</th>
                         <th scope="col">Vendas:</th>
                         <th></th>
                         <th scope="col">Função</th>
@@ -42,31 +42,8 @@
 
 
 
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Deseja Excluir esse usuario?</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p id="idModal">Voce quer exluir esse Usuario?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
 
-                        <button type="button" class="btn btn-primary" onclick="excluirId()">Excluir</button>
-
-                    </div>
-                </div>
-            </div>
-            <input type="hidden" id="url_id">
-        </div>
-    </div>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 
 @endsection
@@ -75,42 +52,32 @@
         $('#url_id').val(valorUrl);
         console.log($('#url_id').val());
     }
-
-     
-    
+ 
     $.ajax({
         type: "GET",
-        url: 'http://127.0.0.1:8000/api/users',
+        url: 'http://127.0.0.1:8000/api/venda/',
         dataType: 'json',
-        //headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         success: function(data) {
-            data.map(u => { 
-                modal = $('#url_id').val();
-                table = "<tr>"; 
-                table += "<td>" + u.name + "</td>"; 
-                table += "<td></td>";
-                   table += "</tr>"
-                $('#idTbody').append(table)
+            data.map(u => {
+                $table = "<tr>";
+                $table += "<td> " + u.user.name + "</td>";
+                $table += "<td> " + u.user.email + "</td>";
+                $table += "<td>";
+                u.saleprodutcts.map(x => {
+                    $table += "<p> Produto: " + x.product.name + "</p>";
+                    $table += "<p> Quantidade: " + x.amount + "</p>";
+                    $table += "<p> Valor Total: " + x.total_value + "<p>";
+                    $table += "<hr>";
+                });
+
+                $table += "</td>";
+                $table += "</tr>";
+                $('#idTbody').append($table)
             })
 
         },
         error: function() {
-            alert("Erro ao realizar  requisicao");
-        }
-    });
-    $.ajax({
-        type: "GET",
-        url: 'http://127.0.0.1:8000/api/Venda_dos_produtos/',
-        dataType: 'json',
-        //headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-        success: function(data) {
-            data.map(u => {  
 
-
-            })
-
-        },
-        error: function() {
             alert("Erro ao realizar  requisicao");
         }
     });

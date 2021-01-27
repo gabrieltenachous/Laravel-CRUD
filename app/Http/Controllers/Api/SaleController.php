@@ -12,7 +12,7 @@ class SaleController extends Controller
 {
     public function getAll()
     {
-        return Sale::with('sale')->get()->toArray();
+        return Sale::with('saleprodutcts.product', 'user','saleprodutcts.sale')->get()->toArray();
     }
     public function get($id)
     {
@@ -29,8 +29,8 @@ class SaleController extends Controller
     public function post(Request $request)
     {
         $sale = new Sale();
-        $sale->user_id  = 1;
-        $sale->total_value = 13;
+        $sale->user_id  = 3;
+        $sale->total_value = 1;
         $sale->save();
 
         $valor = 0;
@@ -43,7 +43,7 @@ class SaleController extends Controller
             $saleProduct->amount = $request->amount[$contador];
             $saleProduct->unitary_value = $request->unitary_value[$contador];
             $prod = Product::find($product);
-            
+
             if ($prod->amount < $saleProduct->amount) {
                 $sale->delete();
                 return response()->json([
@@ -57,7 +57,6 @@ class SaleController extends Controller
             $prod->amount = $saleProduct->after_amount;
             $saleProduct->total_value =  $saleProduct->amount * $saleProduct->unitary_value;
             $valor += $saleProduct->total_value;
-
             $saleProduct->save();
             $prod->save();
             $contador++;
