@@ -23,23 +23,7 @@ class SaleController extends Controller
         return "Criado com sucesso  <a href='./list'>Voltar para Lista</a>";
     }
 
-    public function update(Request $request, $id)
-    {
-        $produtos = Sale::findOrFail($id);
-        try {
-
-            $produtos->update(
-                [
-                    'date' => $request->date, 
-                    'user_id' => $request->user_id,
-                    'total_value' => $request->total_value, 
-                ]
-            );
-        } catch (QueryException $th) {
-            return "Erro inesperado";
-        }
-        return "Edição por ID com sucesso  <a href='/users/list'>Voltar para Lista</a>";
-    }
+     
     public function list()
     {
         $sale = Sale::all();

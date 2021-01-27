@@ -3,14 +3,16 @@
 namespace App\Http\Controllers\Api;
 //http://127.0.0.1:8000/api/produtos
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use App\Models\Sale;
+use App\Models\SaleProduct;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
 {
     public function getAll()
     {
-        return Sale::with('user')->get()->toArray();
+        return Sale::with('sale')->get()->toArray();
     }
     public function get($id)
     {
@@ -20,25 +22,54 @@ class SaleController extends Controller
     public function create()
     {
 
-        return view('sales.create');
+        return view('sale.create');
     }
 
 
     public function post(Request $request)
     {
         $sale = new Sale();
-        $sale->date = $request->date;
-        $sale->user_id  = $request->user_id;
-        $sale->total_value = $request->total_value;
-
-
-        $product = Sale::find($request->user_id);
-        //$product->amount = $product->amount - $sale->amount;
-
-        $product->save();
+        $sale->user_id  = 1;
+        $sale->total_value = 13;
         $sale->save();
+
+        $valor = 0;
+        $contador = 0;
+
+        foreach ($request->product_id as $product) {
+            $saleProduct = new SaleProduct();
+            $saleProduct->sale_id = $sale->id;
+            $saleProduct->product_id = $product;
+            $saleProduct->amount = $request->amount[$contador];
+            $saleProduct->unitary_value = $request->unitary_value[$contador];
+            $prod = Product::find($product);
+            
+            if ($prod->amount < $saleProduct->amount) {
+                $sale->delete();
+                return response()->json([
+                    'message' => 'Não foi possível realizar a venda, a quantidade comprada é maior do que o estoque!',
+                    'data' => $sale
+                ], 400);
+            }
+
+            $saleProduct->before_amount =  $prod->amount;
+            $saleProduct->after_amount =  $prod->amount - $request->amount[$contador];
+            $prod->amount = $saleProduct->after_amount;
+            $saleProduct->total_value =  $saleProduct->amount * $saleProduct->unitary_value;
+            $valor += $saleProduct->total_value;
+
+            $saleProduct->save();
+            $prod->save();
+            $contador++;
+        }
+
+
+
+        $sale->total_value = $valor;
+        $sale->save();
+
         return response()->json([
-            'message' => 'Product criado com sucesso!',
+            'message' => 'Venda realizada com sucesso!',
             'data' => $sale
         ], 200);
     }
