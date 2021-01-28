@@ -24,6 +24,7 @@
                 <input id="" class="btn btn-primary" type="button" value="Criar Usuario"></a>
             <table class="table">
                 <thead>
+
                     <tr>
                         <th scope="col">Usuario:</th>
                         <th scope="col">Email:</th>

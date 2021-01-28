@@ -67,11 +67,10 @@ Route::post('/inputs/excluir/{id}',[InputController::class, 'destroy'])->name('e
 //lista
 Route::get('/inputs/lista',[InputController::class,'list']); 
 //------------------------- Sale -------------------------------
-//criar
-Route::get('venda/create',[SaleController::class,'create']);  
+//criar 
 Route::post('venda/create',[SaleController::class, 'update'])->name('add_produto');
 //mostrar
-Route::get('/venda/ver/{id}', [SaleController::class, 'show']); 
+Route::get('/venda/ver/{id}', [SaleController::class, 'show']);  
 //edit
 Route::get('/venda/editar/{id}',[SaleController::class, 'edit']);
 Route::post('/venda/editar/{id}',[SaleController::class, 'update'])->name('alterar_produto');
@@ -80,6 +79,7 @@ Route::get('/venda/excluir/{id}',[SaleController::class, 'deletar']);
 Route::post('/venda/excluir/{id}',[SaleController::class, 'destroy'])->name('excluir_produto');
 //lista
 Route::get('/venda/lista',[SaleController::class,'list']); 
+Route::get('/venda/listaAll',[SaleController::class,'list']); 
 
 
 //------------------------- SaleProduct-------------------------------

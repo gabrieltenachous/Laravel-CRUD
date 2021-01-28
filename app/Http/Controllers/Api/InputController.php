@@ -31,15 +31,17 @@ class InputController extends Controller
         $inputs->product_id = $request->product_id;
         $inputs->amount  = $request->amount; //2
         $inputs->unitary_value  = $request->unitary_value;
-        $inputs->date = $request->date;
         $inputs->total_value = $request->amount * $request->unitary_value;
-        
+
         $products = Product::find($request->product_id);
 
         $inputs->before_amount = $products->amount;
         $inputs->after_amount  = $products->amount + $request->amount;
         $products->amount = $inputs->after_amount;
 
+        $inputs->save();
+
+        $inputs->date = $inputs->created_at;
         $inputs->save();
         $products->save();
 
@@ -67,13 +69,13 @@ class InputController extends Controller
 
     public function delete(Request $request, $id)
     {
-        
+
         $inputs = Input::find($id);
         $product = Product::find($inputs->product_id);
         $product->amount = $inputs->before_amount;
         $product->save();
         $inputs->delete();
-        
+
         if (is_null($inputs)) {
             return response()->json(['message' => 'User Not Found'], 404);
         }

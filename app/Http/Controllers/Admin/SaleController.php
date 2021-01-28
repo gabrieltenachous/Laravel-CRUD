@@ -26,8 +26,9 @@ class SaleController extends Controller
      
     public function list()
     {
+         
         $sale = Sale::all();
-        return view('sale.lista', ['produtos' => $sale]);
+        return view('sale.listaAll', ['produtos' => $sale]);
     }
 
     public function edit($id, Request $request)

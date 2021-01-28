@@ -3,7 +3,6 @@
 
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/inputmask/4.0.9/jquery.inputmask.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"></script>
     <meta charset="UTF-8">
@@ -26,13 +25,13 @@
             <a href="/venda/lista">Ir para Lista</a>
             <div class="form-group">
                 <label for="name">Produto</label>
-                <select name="products" class="form-control" id="products_id">
+                <select name="products" data-placeholder='Nenhum valor selecionado...' class="form-control select-estados" id="products_id">
                 </select>
             </div>
             <div class="form-group">
                 <label for="preco">Valor unitário</label>
                 <div id="bodyId">
-                    <input disabled required value='2' name='preco' type='text' value='13' class='form-control' id='unitary-value' placeholder='Valor unitário'>    
+                    <input disabled required name='preco' type='text' class='form-control' id='unitary-value' placeholder='Valor unitário'>
                 </div>
             </div>
             <div class="form-group">
@@ -41,14 +40,14 @@
             </div>
             <div class="form-group">
                 <label for="preco">Valor Total</label>
-                <input disabled class="form-control" ng-model="vm.numero2" name="total_number" id="total_amount" value="21">
+                <input disabled class="form-control" ng-model="vm.numero2" name="total_number" id="total_amount">
             </div>
 
             <input type="button" ng-if="vm.numero1 !== undefined && vm.numero2 !== undefined" id="add" class="btn btn-success" value="Adicionar" />
 
             <input type="button" class="btn btn-primary" value="Comprar" onclick="comprarProdutos()" />
             <br> <br>
-
+            <abbr></abbr>
             <table class="table">
                 <thead>
                     <tr>
@@ -66,30 +65,6 @@
     </div>
     @endsection
     <script>
-        function cadastraUsuario() {
-            var name = $("#name").val()
-            var email = $("#email").val()
-            var password = $("#password").val()
-            $.ajax({
-                type: "POST",
-                url: 'http://127.0.0.1:8000/api/users/',
-                dataType: 'json',
-                data: {
-                    'name': name,
-                    'email': email,
-                    'password': password,
-                },
-                success: function(data) {
-
-                    console.log(data)
-                    alert("Cadastro por sucesso");
-                },
-                error: function() {
-                    alert("Erro ao realizar  requisicao");
-                }
-            });
-        }
-
         function comprarProdutos() {
 
             var produtos_id_compra = [];
@@ -100,7 +75,7 @@
             $(".product_td").each(function() {
                     produtos_id_compra.push($(this).html())
                 }),
-                
+
                 $(".value_td").each(function() {
                     unitary_value_compra.push($(this).html())
                 }),
@@ -133,12 +108,13 @@
                 }
             });
         }
+        carregarProdutos();
+
 
         $(document).ready(function() {
             $("#add").click(function() {
 
-                var products_id = $("#products_id option:selected").val()
-
+                var products_id = $("#products_id option:selected").val();
                 var a = $('input[name="products"]').val();
                 var c = $('input[name="preco"]').val();
                 var d = $('input[name="amount"]').val();
@@ -152,21 +128,8 @@
             });
         });
 
-        $.ajax({
-            type: "GET",
-            url: 'http://127.0.0.1:8000/api/inputs',
-            dataType: 'json',
-            success: function(data) {
-                data.map(u => {
 
-                    $('#bodyId').append(table);
-                })
-            },
-            error: function() {
-                alert("Erro ao realizar a requisicao")
-            }
-        });
-        carregarProdutos();
+
 
         function carregarProdutos() {
             $.ajax({
@@ -176,6 +139,19 @@
                 success: function(data) {
                     data.map(u => {
                         var table = "<option value='" + u.id + "'>" + u.name + "</option>"
+                        $(document).change(function() {
+
+                            var ddl = $("#products_id option:selected").val()
+                            if (ddl == u.id) {
+                                u.inputs.map(x => {
+                                    $('#unitary-value').val(x.unitary_value)
+                                    $('#total_amount').val(x.unitary_value * $('#amount').val())
+                                })
+
+                            } else {
+
+                            }
+                        })
                         $('#products_id').append(table);
                     })
                 },

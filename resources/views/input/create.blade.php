@@ -18,24 +18,18 @@
             @csrf
             <div class="form-group">
                 <label for="name">Produto</label>
-                <select  name="products" class="form-control" id="products_id">
+                <select name="products" class="form-control" id="products_id">
                 </select>
-            </div>
-            <div class="form-group">
-                <label for="preco">Data</label>
-                <input type="date" class="form-control" id="date" placeholder="Data">
-            </div>
-            <div class="form-group">
-                <label for="preco">Valor unitário</label>
-                <input required type="text" class="form-control" id="unitary-value" placeholder="Valor unitário">
-            </div>
-            <div class="form-group">
-                <label for="preco">Quantidade</label>
-                <input requerd type="number" class="form-control" id="amount" placeholder="Quantidade">
-            </div>
+                <div class="form-group">
+                    <label for="preco">Valor unitário</label>
+                    <input required type="text" class="form-control" id="unitary-value" placeholder="Valor unitário">                </div>
+                <div class="form-group">
+                    <label for="preco">Quantidade</label>
+                    <input requerd type="number" class="form-control" id="amount" placeholder="Quantidade">
+                </div>
 
-            <input type="button" class="btn btn-primary" onclick="cadastraEntrada()" value="Cadastrar" />
-            <a href="/inputs/lista" class="btn btn-outline-primary">Voltar</a>
+                <input type="button" class="btn btn-primary" onclick="cadastraEntrada()" value="Cadastrar" />
+                <a href="/inputs/lista" class="btn btn-outline-primary">Voltar</a>
         </form>
     </div>
 
@@ -44,6 +38,7 @@
 
 <script>
     carregarProdutos();
+
     $(document).ready(function() {
         $("#unitary-value").maskMoney({
             prefix: "R$ ",
@@ -60,7 +55,7 @@
             success: function(data) {
                 data.map(u => {
                     var table = "<option value='" + u.id + "'>" + u.name + "</option>"
-                    $('#products_id').append(table);
+                     $('#products_id').append(table);
                 })
             },
             error: function() {
@@ -70,13 +65,11 @@
     }
 
     function cadastraEntrada() {
-        
-        var amount = $('#amount').val()
-        
+
+        var amount = $('#amount').val() 
         var products_id = $("#products_id option:selected").val()
-        var unitary_value = $('#unitary-value').maskMoney('unmasked')[0];
-        var date = $("#date").val()
-        var amount = $("#amount").val() 
+        var unitary_value = $('#unitary-value').maskMoney('unmasked')[0]; 
+        var amount = $("#amount").val()
         var before_amount = $("#amount").val()
         var after_amount = $("#amount").val()
         $.ajax({
@@ -85,17 +78,16 @@
             dataType: 'json',
             data: {
                 'product_id': products_id,
-                'unitary_value': unitary_value,
-                'date': date,
+                'unitary_value': unitary_value, 
                 'before_amount': before_amount,
                 'after_amount': after_amount,
-                'amount': amount, 
+                'amount': amount,
             },
             success: function(data) {
                 console.log(amount)
                 alert("Product successfully registered")
             },
-            error: function(data) { 
+            error: function(data) {
                 alert("Erro ao realizar a requisicao")
             }
         });

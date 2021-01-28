@@ -32,8 +32,8 @@ Route::put('/inputs/{id}', [InputController::class, 'put']);
 Route::delete('/inputs/{id}', [InputController::class, 'delete']);
 
 //sale
-Route::get('/venda/{id}', [SaleController::class, 'get']);
-Route::get('/venda', [SaleController::class, 'getAll']);
+Route::get('/venda/{id}', [SaleController::class, 'get']); 
+Route::get('/venda', [SaleController::class, 'getAll']); 
 Route::post('/venda', [SaleController::class, 'post']);
 Route::put('/venda/{id}', [SaleController::class, 'put']);
 Route::delete('/venda/{id}', [SaleController::class, 'delete']);
