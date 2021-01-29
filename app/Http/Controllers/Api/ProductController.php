@@ -5,12 +5,26 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
-    public function getAll()
+    public function getAll(Request $request)
     {
-        return Product::with('inputs.product', 'saleproducts.product','saleproducts.sale')->get()->toArray();
+
+        if ($request->name != '') {
+            $prod = Product::with('inputs.product', 'saleproducts.product', 'saleproducts.sale');
+
+            if ($request->name) {
+                
+                $prod = DB::table('products')->where('name','like','%'.$request->name.'%');
+            }
+           // exit($prod->toSql());
+
+            return $prod->get()->toArray();
+        } else {
+            return Product::with('inputs.product', 'saleproducts.product', 'saleproducts.sale')->get()->toArray();
+        }
     }
     public function get($id)
     {

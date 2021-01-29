@@ -66,16 +66,13 @@
     @endsection
     <script>
         function comprarProdutos() {
-
             var produtos_id_compra = [];
             var unitary_value_compra = [];
             var amount_compra = [];
             var total_value = [];
-
             $(".product_td").each(function() {
                     produtos_id_compra.push($(this).html())
                 }),
-
                 $(".value_td").each(function() {
                     unitary_value_compra.push($(this).html())
                 }),
@@ -85,19 +82,16 @@
                 $(".total_number_td").each(function() {
                     total_value.push($(this).html())
                 }),
-
                 console.log(amount_compra)
             $.ajax({
                 type: "POST",
                 url: 'http://127.0.0.1:8000/api/venda',
                 dataType: 'json',
                 data: {
-
                     "product_id": produtos_id_compra,
                     "unitary_value": unitary_value_compra,
                     "total_value": total_value,
                     "amount": amount_compra,
-
                 },
                 success: function(data) {
                     alert("Product successfully registered")
@@ -109,11 +103,8 @@
             });
         }
         carregarProdutos();
-
-
         $(document).ready(function() {
             $("#add").click(function() {
-
                 var products_id = $("#products_id option:selected").val();
                 var a = $('input[name="products"]').val();
                 var c = $('input[name="preco"]').val();
@@ -127,10 +118,6 @@
                 $("tbody").append("</tr>");
             });
         });
-
-
-
-
         function carregarProdutos() {
             $.ajax({
                 type: "GET",
@@ -140,16 +127,13 @@
                     data.map(u => {
                         var table = "<option value='" + u.id + "'>" + u.name + "</option>"
                         $(document).change(function() {
-
                             var ddl = $("#products_id option:selected").val()
                             if (ddl == u.id) {
                                 u.inputs.map(x => {
                                     $('#unitary-value').val(x.unitary_value)
                                     $('#total_amount').val(x.unitary_value * $('#amount').val())
                                 })
-
                             } else {
-
                             }
                         })
                         $('#products_id').append(table);

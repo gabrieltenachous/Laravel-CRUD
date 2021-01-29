@@ -17,10 +17,11 @@
     @section("content")
     <div class="container">
         <div class="row">
+    <a href="venda/create">
+            <div class="col-10">
+                <input id="" class="btn btn-primary" type="button" value="Fazer Compra"></a>
+            </div></a>
 
-            <a href="/inputs/create">
-                <input id="" class="btn btn-primary" type="button" value="Criar Entrada"></a>
-            <div class="col-8"></div>
             <div class="form-group">
                 <input type="date" class="form-control" id="data-inicial" />
                 <input type="date" class="form-control" id="data-final" />
@@ -30,11 +31,18 @@
 
                 <div id="tabela">
 
-                    <table class="table">
+                    <table id="myTable" class="table">
                         <thead>
                             <tr>
                                 <th><input type="text" id="txtColuna1" placeholder="Produto" /></th>
-                                <th><input type="text" id="txtColuna2" placeholder="Tipo" /></th>
+                                <th>
+                                    <label for="filter">Tipo:</label>
+                                    <select onclick="tipoClick();" name="mylist" id="filter">
+                                        <option value="Tudo">Tudo</option>
+                                        <option value="Saída">Saída</option>
+                                        <option value="Entrada">Entrada</option>
+                                    </select>
+                                </th>
                                 <th>
                                     <input type="text" id="txtColuna3" placeholder="Date">
                                 </th>
@@ -52,12 +60,13 @@
                                 <th scope="col">Quantidade Antes:</th>
                                 <th scope="col">Quantidade Depois:</th>
                                 <th scope="col">Valor Unitario:</th>
-                                <th scope="col">Valor Total:</th> 
+                                <th scope="col">Valor Total:</th>
                             </tr>
                         </thead>
                         <tbody id="idTbody">
 
                         </tbody>
+                    </table>
                 </div>
             </div>
 
@@ -147,10 +156,9 @@
     }
 
     function hidenId(valorUrl) {
-        $('#url_id').val(valorUrl);
-        console.log($('#url_id').val());
+        $('#url_id').val(valorUrl); 
     }
-
+    //Pesquisa por Data
     function filtroData() {
         var inicial = $('#data-inicial').val()
         var final = $('#data-final').val()
@@ -179,25 +187,29 @@
             });
         }
     }
-    $(function() {
-        $("#tabela input").keyup(function() {
-            var index = $(this).parent().index();
-            var nth = "#tabela td:nth-child(" + (index + 1).toString() + ")";
-            var valor = $(this).val().toUpperCase();
-            $("#tabela tbody tr").show();
-            $(nth).each(function() {
-                if ($(this).text().toUpperCase().indexOf(valor) < 0) {
-                    $(this).parent().hide();
-                }
-            });
-        });
+ 
+    
+    // function filterTable() {
+    //     let dropdown, filter;
 
-        $("#tabela input").blur(function() {
-            $(this).val("");
-        });
-    });
-
-
+    //     var input = $(this).find('.tipo').text().toLowerCase();
+    //     dropdown = document.getElementById("countriesDropdown"); 
+    //     filter = dropdown.value;
+    //     console.log(filter) 
+    //     if(filter == 'All'){
+    //         $("#tabela tbody tr").filter(function() {
+    //             $(this).toggle(true)
+    //         });
+    //     }else if(filter== "Saída"){
+    //         $("#tabela tbody tr").filter(function() {
+    //             $(this).toggle(false)
+    //         });
+    //     }else{
+    //         $("#tabela tbody tr").filter(function() {
+    //             $(this).toggle(false)
+    //         });
+    //     }
+    // }    
     $.ajax({
         type: "GET",
         url: 'http://127.0.0.1:8000/api/inputs',
@@ -207,7 +219,6 @@
                 table = u.name;
                 $('#product_id').append(table)
             })
-
         },
         error: function() {
             alert("Erro ao realizar  requisicao");
@@ -219,16 +230,13 @@
             month = '' + (d.getMonth() + 1),
             day = '' + d.getDate(),
             year = d.getFullYear();
-
         if (month.length < 2) month = '0' + month;
         if (day.length < 2) day = '0' + day;
-
         return [year, month, day].join('-');
     }
 
     function excluirId() {
-        var valorUrl = $('#url_id').val();
-        console.log(valorUrl)
+        var valorUrl = $('#url_id').val(); 
         $.ajax({
             type: "DELETE",
             url: 'http://127.0.0.1:8000/api/inputs/' + valorUrl,
@@ -258,7 +266,6 @@
                 u.inputs.map(inp => {
                     entrada.push(inp);
                 })
-
                 u.saleproducts.map(inp => {
                     saida.push(inp);
                 })
@@ -269,32 +276,23 @@
                 return a.created_at < b.created_at ? -1 : a.created_at > b.created_at ? 1 : 0;
             }
             entradaSaida.sort(compare);
-
-
-            entradaSaida.map(inp => {
-
-                console.log(inp)
+            entradaSaida.map(inp => { 
                 $table = "<tr>";
                 $table += "<td class='nome'>" + inp.product.name + "</td>";
-                $table += "<td " + (inp.date != null ? "> <p class='btn btn-success'>Entrada</p></td> " : "<td><p class='btn btn-danger'>Saída</p></td>");
-                $table += "<td class='data'>" + (inp.date != null ? inp.date : formatDate(inp.created_at)) + "</td>";
+                $table += "<td class='tipo'" + (inp.date != null ? "> Entrada</td> " : "<td data-type='Saida' class='tipo'>Saída</td>");
+                $table += "<td data-type='Entrada' class='data'>" + (inp.date != null ? inp.date : formatDate(inp.created_at)) + "</td>";
                 $table += "<td>" + inp.amount + "</td>";
                 $table += "<td>" + inp.before_amount + "</td>";
                 $table += "<td>" + inp.after_amount + "</td>";
                 $table += "<td>" + formatter.format(inp.unitary_value) + "</td>";
                 $table += "<td>" + formatter.format(inp.total_value) + "</td>";
-
                 $table += "</tr>";
                 $('#idTbody').append($table);
-
-
             })
-
             data.map(u => {
-                u.inputs.map(inp => {
-                    console.log("Amount Produto:" + u.amount + "Amount Inputs Produto" + inp.product.amount)
+                u.inputs.map(inp => { 
                     if (u.amount == inp.product.amount) {
-                        table += "<td>" + "<input class='btn btn-danger' type='button' data-toggle='modal' data-target='#exampleModal' onclick='hidenId(" + inp.product.id + ")' value='Excluir'/>" + "</td>";
+                        table = "<td>" + "<input class='btn btn-danger' type='button' data-toggle='modal' data-target='#exampleModal' onclick='hidenId(" + inp.product.id + ")' value='Excluir'/>" + "</td>";
                         table += "<td>" + "<a href='/inputs/editar/" + inp.product.id + "'>" + "<input class='btn btn-warning' type='button' value='Editar'/>" + " </a>" + "</td> ";
                         table += "<td>" + "<a href='/inputs/ver/" + inp.product.id + "'>" + "<input class='btn btn-success' type='button' value='Visualizar'/>" + " </a>" + "</td>";
                     } else {
@@ -304,8 +302,6 @@
                     }
                 })
             })
-
-
             $table += "</tr>";
             $('#idTbody').append($table);
         },

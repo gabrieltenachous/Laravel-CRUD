@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Sale;
 use Illuminate\Http\Request;
-use Illuminate\Database\QueryException;
 
 class SaleController extends Controller
 {
@@ -16,21 +15,26 @@ class SaleController extends Controller
     public function store(Request $request)
     {
         Sale::create([
-            'date' => $request->date, 
+            'date' => $request->date,
             'user_id' => $request->user_id,
-            'total_value' => $request->total_value, 
+            'total_value' => $request->total_value,
         ]);
         return "Criado com sucesso  <a href='./list'>Voltar para Lista</a>";
     }
 
-     
+
     public function list()
     {
-         
+
         $sale = Sale::all();
         return view('sale.listaAll', ['produtos' => $sale]);
     }
+    public function list2()
+    {
 
+        $sale = Sale::all();
+        return view('sale.listaAll', ['produtos' => $sale]);
+    }
     public function edit($id, Request $request)
     {
         $sale = Sale::findOrFail($id);

@@ -6,7 +6,7 @@ use App\Http\Controllers\Admin\InputController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SaleController;
 use App\Http\Controllers\Admin\SaleProductController;
-
+ 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -68,6 +68,7 @@ Route::post('/inputs/excluir/{id}',[InputController::class, 'destroy'])->name('e
 Route::get('/inputs/lista',[InputController::class,'list']); 
 //------------------------- Sale -------------------------------
 //criar 
+Route::get('venda/create',[SaleController::class, 'create']);
 Route::post('venda/create',[SaleController::class, 'update'])->name('add_produto');
 //mostrar
 Route::get('/venda/ver/{id}', [SaleController::class, 'show']);  
@@ -80,7 +81,6 @@ Route::post('/venda/excluir/{id}',[SaleController::class, 'destroy'])->name('exc
 //lista
 Route::get('/venda/lista',[SaleController::class,'list']); 
 Route::get('/venda/listaAll',[SaleController::class,'list']); 
-
 
 //------------------------- SaleProduct-------------------------------
 //criar

@@ -16,7 +16,7 @@
                 <a class="nav-link" href="/users/list">Usuarios</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/venda/lista">Vendas</a>
+                <a class="nav-link" href="/venda/lista">Vendas/Compras</a>
             </li> 
             <!-- <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>

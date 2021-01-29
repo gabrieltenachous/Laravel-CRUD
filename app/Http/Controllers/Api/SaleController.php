@@ -5,15 +5,47 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Sale;
-use App\Models\SaleProduct;
-use Illuminate\Http\Request;
+use App\Models\SaleProduct; 
+use Illuminate\Http\Request; 
+use Illuminate\Support\Facades\Response;
 
 class SaleController extends Controller
 {
-    public function getAll()
+    public function getAll(Request $request)
     {
-        return Sale::with('saleprodutcts.product', 'user','saleprodutcts.sale')->get()->toArray();
+        return Sale::with('saleprodutcts.product', 'user', 'saleprodutcts.sale')->get()->toArray();
     }
+
+
+
+
+    // public function getAll(Request $request)
+    // {
+    //     if ($request->pesquisa != '') {
+    //         $prod = Product::with('inputs.product', 'inputs', 'saleProducts.sale', 'saleProducts.product');
+
+    //         if ($request->inicial)
+    //             // $prod = $prod->where('inputs.date', '>=', $request->inicial);
+    //             $prod = $prod->whereHas('inputs', function (Builder $query) use ($request) {
+    //                 $query->where('date', '>=', $request->inicial);
+    //             });
+
+    //         if ($request->final)
+    //             // $prod = $prod->where('inputs.date', '<=', $request->final);
+    //             $prod = $prod->whereHas('inputs', function (Builder $query) use ($request) {
+    //                 $query->where('date', '<=', $request->final);
+    //             });
+
+    //         if ($request->pesquisa)
+    //             $prod = $prod->where('name', 'LIKE', $request->pesquisa . '%'); 
+
+    //         $prod = $prod->get()->toArray();
+
+    //         return $prod;
+    //     } else {
+    //         return Product::with('inputs.product', 'saleProducts.sale', 'saleProducts.product')->get()->toArray();
+    //     }
+    // }
     public function get($id)
     {
         return Sale::find($id);
