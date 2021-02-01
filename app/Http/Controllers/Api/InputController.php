@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\Product;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Input;
+use App\Models\Input; 
 
 class InputController extends Controller
 {

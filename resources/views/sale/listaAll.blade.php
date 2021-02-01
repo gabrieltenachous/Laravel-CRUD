@@ -17,89 +17,92 @@
     @section("content")
     <div class="container">
         <div class="row">
-    <a href="venda/create">
-            <div class="col-10">
-                <input id="" class="btn btn-primary" type="button" value="Fazer Compra"></a>
-            </div></a>
+            <a href="venda/create">
+                <div class="col-10">
+                    <input id="" class="btn btn-primary" type="button" value="Fazer Compra">
+            </a>
+        </div></a>
 
-            <div class="form-group">
-                <input type="date" class="form-control" id="data-inicial" />
-                <input type="date" class="form-control" id="data-final" />
-                <button id="search" class="btn btn-success" placeholder="Pesquisar" onclick="filtroData()">Pesquisar</button>
+        <div class="form-group">
+            <input type="date" class="form-control" id="data-inicial" />
+            <input type="date" class="form-control" id="data-final" />
+            <button id="search" class="btn btn-success" placeholder="Pesquisar" onclick="searchName()">Pesquisar</button>
+        </div>
+        <div id="divConteudo">
+
+            <div id="tabela">
+
+                <table id="myTable" class="table">
+                    <thead>
+                        <tr>
+                            <th><input type="text" id="name" placeholder="Produto" /></th>
+                            <th>
+                                <label for="filter">Tipo:</label>
+                                <select onclick="tipoClick();" name="mylist" id="filter">
+                                    <option value="Tudo">Tudo</option>
+                                    <option value="Saída">Saída</option>
+                                    <option value="Entrada">Entrada</option>
+                                </select>
+                            </th>
+
+                            <p id="nameTd"></p>
+                            <th>
+                                <input type="text" id="txtColuna3" placeholder="Date">
+                            </th>
+                            <th><input type="text" id="txtColuna4" placeholder="Quantidade" /></th>
+                            <th><input type="text" id="txtColuna5" placeholder="Quantidade A." /></th>
+                            <th><input type="text" id="txtColuna6" placeholder="Quantidade D." /></th>
+                            <th><input type="text" id="txtColuna7" placeholder="Valor Unitario" /></th>
+                            <th><input type="text" id="txtColuna8" placeholder="Valor Total" /></th>
+                        </tr>
+                        <tr>
+                            <th scope="col">Produto</th>
+                            <th scope="col">Tipo:</th>
+                            <th scope="col">Data:</th>
+                            <th scope="col">Quantidade:</th>
+                            <th scope="col">Quantidade Antes:</th>
+                            <th scope="col">Quantidade Depois:</th>
+                            <th scope="col">Valor Unitario:</th>
+                            <th scope="col">Valor Total:</th>
+                        </tr>
+                    </thead>
+                    <tbody id="idTbody">
+
+                    </tbody>
+                </table>
             </div>
-            <div id="divConteudo">
+        </div>
 
-                <div id="tabela">
+        </table>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Deseja Excluir esse produto?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="idModal">Voce quer exluir esse produto?</p>
+                </div>
 
-                    <table id="myTable" class="table">
-                        <thead>
-                            <tr>
-                                <th><input type="text" id="txtColuna1" placeholder="Produto" /></th>
-                                <th>
-                                    <label for="filter">Tipo:</label>
-                                    <select onclick="tipoClick();" name="mylist" id="filter">
-                                        <option value="Tudo">Tudo</option>
-                                        <option value="Saída">Saída</option>
-                                        <option value="Entrada">Entrada</option>
-                                    </select>
-                                </th>
-                                <th>
-                                    <input type="text" id="txtColuna3" placeholder="Date">
-                                </th>
-                                <th><input type="text" id="txtColuna4" placeholder="Quantidade" /></th>
-                                <th><input type="text" id="txtColuna5" placeholder="Quantidade A." /></th>
-                                <th><input type="text" id="txtColuna6" placeholder="Quantidade D." /></th>
-                                <th><input type="text" id="txtColuna7" placeholder="Valor Unitario" /></th>
-                                <th><input type="text" id="txtColuna8" placeholder="Valor Total" /></th>
-                            </tr>
-                            <tr>
-                                <th scope="col">Produto</th>
-                                <th scope="col">Tipo:</th>
-                                <th scope="col">Data:</th>
-                                <th scope="col">Quantidade:</th>
-                                <th scope="col">Quantidade Antes:</th>
-                                <th scope="col">Quantidade Depois:</th>
-                                <th scope="col">Valor Unitario:</th>
-                                <th scope="col">Valor Total:</th>
-                            </tr>
-                        </thead>
-                        <tbody id="idTbody">
 
-                        </tbody>
-                    </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+
+                    <button type="button" class="btn btn-primary" onclick="excluirId()">Excluir</button>
+
                 </div>
             </div>
-
-            </table>
         </div>
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Deseja Excluir esse produto?</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p id="idModal">Voce quer exluir esse produto?</p>
-                    </div>
+
+        <input type="hidden" id="url_id">
 
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-
-                        <button type="button" class="btn btn-primary" onclick="excluirId()">Excluir</button>
-
-                    </div>
-                </div>
-            </div>
-
-            <input type="hidden" id="url_id">
-
-
-        </div>
+    </div>
     </div>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
@@ -156,7 +159,7 @@
     }
 
     function hidenId(valorUrl) {
-        $('#url_id').val(valorUrl); 
+        $('#url_id').val(valorUrl);
     }
     //Pesquisa por Data
     function filtroData() {
@@ -187,11 +190,10 @@
             });
         }
     }
- 
-    
+
+
     // function filterTable() {
     //     let dropdown, filter;
-
     //     var input = $(this).find('.tipo').text().toLowerCase();
     //     dropdown = document.getElementById("countriesDropdown"); 
     //     filter = dropdown.value;
@@ -210,6 +212,8 @@
     //         });
     //     }
     // }    
+
+
     $.ajax({
         type: "GET",
         url: 'http://127.0.0.1:8000/api/inputs',
@@ -235,8 +239,33 @@
         return [year, month, day].join('-');
     }
 
+
+    function searchName() {
+
+        var name = $('#name').val();
+        $.ajax({
+            type: "GET",
+            url: 'http://127.0.0.1:8000/api/venda',
+            data: {
+                "name": name,
+            },
+            dataType: 'json',
+            success: function(data) {
+                data.map(u => { 
+                    u.saleproducts.map(inp =>{ 
+                        $tabelas = u.name;
+                        $('#nameTd').append($tabelas);
+                    }) 
+                })
+            },
+            error: function() {
+                alert("Erro ao realizar  requisicao");
+            }
+        });
+    }
+
     function excluirId() {
-        var valorUrl = $('#url_id').val(); 
+        var valorUrl = $('#url_id').val();
         $.ajax({
             type: "DELETE",
             url: 'http://127.0.0.1:8000/api/inputs/' + valorUrl,
@@ -276,10 +305,10 @@
                 return a.created_at < b.created_at ? -1 : a.created_at > b.created_at ? 1 : 0;
             }
             entradaSaida.sort(compare);
-            entradaSaida.map(inp => { 
+            entradaSaida.map(inp => {
                 $table = "<tr>";
                 $table += "<td class='nome'>" + inp.product.name + "</td>";
-                $table += "<td class='tipo'" + (inp.date != null ? "> Entrada</td> " : "<td data-type='Saida' class='tipo'>Saída</td>");
+                $table += "<td  class='tipo '" + (inp.date != null ? "><p class='btn btn-success'>Entrada</p> </td> " : "<td data-type='Saida' class='tipo'><p class='btn btn-danger'>Saída</p></td>");
                 $table += "<td data-type='Entrada' class='data'>" + (inp.date != null ? inp.date : formatDate(inp.created_at)) + "</td>";
                 $table += "<td>" + inp.amount + "</td>";
                 $table += "<td>" + inp.before_amount + "</td>";
@@ -290,7 +319,7 @@
                 $('#idTbody').append($table);
             })
             data.map(u => {
-                u.inputs.map(inp => { 
+                u.inputs.map(inp => {
                     if (u.amount == inp.product.amount) {
                         table = "<td>" + "<input class='btn btn-danger' type='button' data-toggle='modal' data-target='#exampleModal' onclick='hidenId(" + inp.product.id + ")' value='Excluir'/>" + "</td>";
                         table += "<td>" + "<a href='/inputs/editar/" + inp.product.id + "'>" + "<input class='btn btn-warning' type='button' value='Editar'/>" + " </a>" + "</td> ";

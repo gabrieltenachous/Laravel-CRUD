@@ -5,15 +5,50 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Sale;
-use App\Models\SaleProduct; 
-use Illuminate\Http\Request; 
+use App\Models\SaleProduct;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\DB;
 
 class SaleController extends Controller
 {
     public function getAll(Request $request)
     {
-        return Sale::with('saleprodutcts.product', 'user', 'saleprodutcts.sale')->get()->toArray();
+
+        $prod = Product::with('saleproducts');
+
+        if ($request->name != '') {
+
+
+            if ($request->name) {
+                $prod = $prod->whereHas('saleproducts', function ($q) use ($request) {
+                    $q->whereHas('product', function ($q) use ($request) {
+                        $q->where('name', 'like', '%' . $request->name . '%');
+                    });
+                })->with([
+                    'saleproducts' => function ($q) use ($request) {
+                        $q->whereHas('product', function ($q) use ($request) {
+                            $q->where('name', 'like', '%' . $request->name . '%');
+                        });
+                    }
+                ]);
+
+                $prod->whereHas('inputs', function ($q) use ($request) {
+                    $q->whereHas('product', function ($q) use ($request) {
+                        $q->where('name', 'like', '%' . $request->name . '%');
+                    });
+                });
+
+
+                //$sale = DB::table('sale')->where('name', 'like', '%' . $request->name . '%');
+            }
+
+
+            return $prod->get()->toArray();
+        } else {
+
+            return Sale::with('saleprodutcts.product', 'user', 'saleprodutcts.sale')->get()->toArray();
+        }
     }
 
 

@@ -16,10 +16,10 @@ class ProductController extends Controller
             $prod = Product::with('inputs.product', 'saleproducts.product', 'saleproducts.sale');
 
             if ($request->name) {
-                
-                $prod = DB::table('products')->where('name','like','%'.$request->name.'%');
+
+                $prod = DB::table('products')->where('name', 'like', '%' . $request->name . '%');
             }
-           // exit($prod->toSql());
+            //exit($prod->toSql());
 
             return $prod->get()->toArray();
         } else {
